@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c3f6hfoyccp8s"]
+
+[ext_resource type="Texture2D" uid="uid://dnklpn4a2n1yr" path="res://assets/kenney_space-shooter-redux/PNG/ufoGreen.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://c2wbcdwt43bme" path="res://scenes/entities/player/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://br5wyvka4tsqh" path="res://scenes/entities/player/camera_2d.gd" id="3_nh4ur"]
+[ext_resource type="PackedScene" uid="uid://cdl4wu8sxq5um" path="res://scenes/entities/weapons/weapon.tscn" id="5_qlg0r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u8vuu"]
+radius = 45.0
+
+[node name="Player" type="RigidBody2D" unique_id=1315210555 groups=["Players"]]
+collision_layer = 2
+collision_mask = 13
+gravity_scale = 0.0
+script = ExtResource("1_g2els")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=542023993]
+texture = ExtResource("1_3vyb7")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2060394021]
+zoom = Vector2(0.3, 0.3)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 20.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("3_nh4ur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=206207782]
+shape = SubResource("CircleShape2D_u8vuu")
+
+[node name="WeaponPivotPoint" type="Node2D" parent="." unique_id=577332573]
+
+[node name="Weapon" parent="WeaponPivotPoint" unique_id=1439199296 instance=ExtResource("5_qlg0r")]
+position = Vector2(80, 0)

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c8eh3tj0rxl7r"]
+
+[ext_resource type="Script" uid="uid://r73b6ms8l3u6" path="res://scenes/levels/mazes/maze.gd" id="1_la84r"]
+[ext_resource type="Texture2D" uid="uid://cak3mt0qddl7n" path="res://assets/kenney_space-shooter-redux/Backgrounds/darkPurple.png" id="2_qtfq6"]
+
+[node name="Maze" type="Area2D" unique_id=27677339]
+script = ExtResource("1_la84r")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=423759827]
+z_index = -50
+polygon = PackedVector2Array(-524, -324, -523, 321, -190, 321, -193, 1120, 687, 2101, 2557, 2091, 3638, 625, 3861, -674, 3916, -1745, 3219, -1715, 3219, -886, 3072, 428, 2294, 1550, 975, 1651, 615.6255, 1298.3032, 383, 1070, 222, 317, 596, 312, 596, -335)
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1661981591]
+texture_repeat = 2
+texture = ExtResource("2_qtfq6")
+polygon = PackedVector2Array(-524, -324, -523, 321, -190, 321, -193, 1120, 687, 2101, 2557, 2091, 3638, 625, 3861, -674, 3916, -1745, 3219, -1715, 3219, -886, 3072, 428, 2294, 1550, 975, 1651, 383, 1070, 222, 317, 596, 312, 596, -335)

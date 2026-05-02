@@ -1,0 +1,303 @@
+[gd_scene load_steps=9 format=3 uid="uid://npvh7onlai36"]
+
+[ext_resource type="Texture2D" uid="uid://bhjti7w3biktm" path="res://assets/kenney_space-shooter-redux/Backgrounds/purple.png" id="1_l6cm7"]
+[ext_resource type="FontFile" uid="uid://dbvn5imyd652k" path="res://ui/fonts/PressStart2P-Regular.ttf" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://cv86y6fewr06l" path="res://assets/other/Banner.png" id="2_oa1go"]
+[ext_resource type="Texture2D" uid="uid://bimwuo86py3py" path="res://assets/kenney_space-shooter-redux/PNG/ufoRed.png" id="3_8ln24"]
+[ext_resource type="Theme" uid="uid://b8o56yuwhres2" path="res://ui/themes/main_menu.tres" id="4_wu84c"]
+[ext_resource type="Shader" uid="uid://ni3633jyc3r3" path="res://shaders/outline.gdshader" id="6_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://8yyb4jxkylgg" path="res://icon.svg" id="7_oa1go"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oa1go"]
+shader = ExtResource("6_rtw2f")
+shader_parameter/maxLineWidth = 4.318
+shader_parameter/minLineWidth = 1.705
+shader_parameter/speed = 10.0
+shader_parameter/blockSize = 0.3
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/tolerance = 0.732
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_l6cm7")
+stretch_mode = 1
+
+[node name="banner" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(437.524, 410.49)
+scale = Vector2(0.816219, 0.816219)
+skew = -0.0331613
+texture = ExtResource("2_oa1go")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="FrontierMC" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 180
+
+[node name="Frontier" type="RichTextLabel" parent="MarginContainer/VBoxContainer/FrontierMC"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Frontier[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="FooMC" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 180
+
+[node name="Foo" type="RichTextLabel" parent="MarginContainer/VBoxContainer/FooMC"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Foo[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="FighterMC" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 180
+
+[node name="Fighter" type="RichTextLabel" parent="MarginContainer/VBoxContainer/FighterMC"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Fighter[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="Foo" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 180
+
+[node name="Title2" type="Control" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Title2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frontier" type="RichTextLabel" parent="MarginContainer/Title2/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Frontier[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="Foo" type="RichTextLabel" parent="MarginContainer/Title2/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Foo[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="Fighter" type="RichTextLabel" parent="MarginContainer/Title2/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[right]Fighter[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.877478, 0.91884, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.016896, 0.220343, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 40
+theme_override_constants/line_separation = 25
+theme_override_fonts/normal_font = ExtResource("2_ekxnf")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[left]   Frontier[/left] [center]Foo[/center] [right]Fighter[/right]"
+fit_content = true
+scroll_active = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_8ln24")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("4_wu84c")
+bbcode_enabled = true
+text = "Continue"
+fit_content = true
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_8ln24")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer2"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("4_wu84c")
+bbcode_enabled = true
+text = "New Game"
+fit_content = true
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("3_8ln24")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer3"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/MarginContainer2/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("4_wu84c")
+bbcode_enabled = true
+text = "Options"
+fit_content = true
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer"]
+visible = false
+material = SubResource("ShaderMaterial_oa1go")
+position = Vector2(166, 345)
+scale = Vector2(2.32813, 2.69162)
+texture = ExtResource("7_oa1go")

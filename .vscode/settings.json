@@ -1,0 +1,16 @@
+{
+    "godot_tools.editor_path": "/home/jack/Godot/Godot_v4.6.1-stable_linux.x86_64",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": false,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.tscn": true,
+        "**/.uid": true,
+        "**/*.uid": true,
+        "**/*.tmp": true,
+        "**/*.tscn": true
+    },
+    "explorerExclude.backup": {}
+}

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cdl4wu8sxq5um"]
+
+[ext_resource type="Script" uid="uid://b8w8phf4wvogv" path="res://scenes/entities/weapons/weapon.gd" id="1_xasec"]
+[ext_resource type="Texture2D" uid="uid://c016hto81t3qk" path="res://assets/kenney_space-shooter-redux/PNG/Parts/beam6.png" id="2_uxn4k"]
+
+[node name="Weapon" type="Node2D" unique_id=1954120851]
+script = ExtResource("1_xasec")
+
+[node name="WeaponSprite" type="Sprite2D" parent="." unique_id=1419884057]
+texture = ExtResource("2_uxn4k")
+
+[node name="ProjectileSpawnPosition" type="Marker2D" parent="." unique_id=327286374]
+position = Vector2(23, 0)

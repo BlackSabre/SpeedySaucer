@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://ccuqltjtvpvt0"]
+
+[ext_resource type="Texture2D" uid="uid://bhjti7w3biktm" path="res://assets/kenney_space-shooter-redux/Backgrounds/purple.png" id="1_014kd"]
+[ext_resource type="Script" uid="uid://di480wyfy27y3" path="res://scenes/levels/level.gd" id="1_rus8k"]
+[ext_resource type="PackedScene" uid="uid://c3f6hfoyccp8s" path="res://scenes/entities/player/player.tscn" id="2_bswci"]
+[ext_resource type="PackedScene" uid="uid://dqaxrpytcrxx0" path="res://scenes/levels/mazes/maze.tscn" id="4_5xbjy"]
+[ext_resource type="PackedScene" uid="uid://j466a3wbwdij" path="res://scenes/entities/enemies/enemy.tscn" id="5_6761a"]
+[ext_resource type="PackedScene" uid="uid://cm6rnfmka1yba" path="res://scenes/entities/obstacles/meteor.tscn" id="6_sk5k4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5xbjy"]
+font_size = 32
+
+[sub_resource type="Gradient" id="Gradient_6761a"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sk5k4"]
+gradient = SubResource("Gradient_6761a")
+width = 20
+
+[node name="Level1" type="Node2D" unique_id=748020803]
+script = ExtResource("1_rus8k")
+
+[node name="Graphics" type="Node" parent="." unique_id=1373886588]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics" unique_id=268578808]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer" unique_id=769992925]
+z_index = -100
+texture_repeat = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02606, 1.01299)
+texture = ExtResource("1_014kd")
+stretch_mode = 1
+
+[node name="StartLabel" type="Label" parent="Graphics" unique_id=1313717289]
+z_index = -25
+offset_left = 274.0
+offset_top = 71.0
+offset_right = 369.0
+offset_bottom = 116.0
+text = "START"
+label_settings = SubResource("LabelSettings_5xbjy")
+
+[node name="EndLabel" type="Label" parent="Graphics" unique_id=1707938077]
+z_index = -25
+offset_left = 3904.0
+offset_top = -1428.0
+offset_right = 3999.0
+offset_bottom = -1383.0
+text = "END"
+label_settings = SubResource("LabelSettings_5xbjy")
+
+[node name="Maze" parent="." unique_id=1451056539 instance=ExtResource("4_5xbjy")]
+z_index = -50
+position = Vector2(325, 180)
+
+[node name="Player" parent="." unique_id=1692925685 instance=ExtResource("2_bswci")]
+position = Vector2(-17, 177)
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 2
+
+[node name="Projectiles" type="Node" parent="." unique_id=1645752010]
+
+[node name="Enemies" type="Node" parent="." unique_id=1807748713]
+
+[node name="Enemy" parent="Enemies" unique_id=1895133279 instance=ExtResource("5_6761a")]
+position = Vector2(219, -115)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1218887566]
+position = Vector2(400, 400)
+scale = Vector2(1, 19.5)
+texture = SubResource("GradientTexture1D_sk5k4")
+
+[node name="Meteor" parent="." unique_id=1806158858 instance=ExtResource("6_sk5k4")]
+position = Vector2(570, 444)
+
+[connection signal="body_entered" from="Maze" to="." method="_on_maze_body_entered"]
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
