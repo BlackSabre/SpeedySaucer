@@ -8,15 +8,11 @@ radius = 46.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1895133279]
 collision_layer = 4
-collision_mask = 11
+collision_mask = 10
 motion_mode = 1
 script = ExtResource("1_pqhw6")
-move_speed = 300.0
-turn_speed = 2.0
-attack_speed = 900.0
-angle_slerp_switch = 0.8
-continuous_slerp_rate = 4.0
-distance_squared_start_turn_threshold = 2500000
+move_speed = 700.0
+max_turn_radians = 20.0
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=614230299]
 rotation = 4.712389
@@ -27,21 +23,20 @@ metadata/_edit_lock_ = true
 shape = SubResource("CircleShape2D_p7g5j")
 
 [node name="Raycasts" type="Node2D" parent="." unique_id=1089944620]
-visible = false
 
 [node name="Forward" type="RayCast2D" parent="Raycasts" unique_id=351513967]
 exclude_parent = false
-target_position = Vector2(1200, 0)
-collision_mask = 2
+target_position = Vector2(1600, 0)
+collision_mask = 10
 
 [node name="ForwardLeft" type="RayCast2D" parent="Raycasts" unique_id=2072005735]
 rotation = -0.7853982
 exclude_parent = false
 target_position = Vector2(1200, 0)
-collision_mask = 2
+collision_mask = 10
 
 [node name="ForwardRight" type="RayCast2D" parent="Raycasts" unique_id=1836021]
 rotation = 0.7853982
 exclude_parent = false
 target_position = Vector2(1200, 0)
-collision_mask = 2
+collision_mask = 10
