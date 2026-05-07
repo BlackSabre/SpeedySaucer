@@ -4,7 +4,7 @@
 
 [node name="Meteor" type="RigidBody2D" unique_id=1806158858]
 collision_layer = 8
-collision_mask = 14
+collision_mask = 30
 gravity_scale = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=351470618]
