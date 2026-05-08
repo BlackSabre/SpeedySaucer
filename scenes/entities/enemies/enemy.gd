@@ -1,17 +1,16 @@
 extends CharacterBody2D
 
 @export var move_speed: float = 500
-@export var turn_speed: float = 1.5
+@export var turn_speed: float = 2.5
 @export var max_turn_radians: float = 3
 @export var attack_speed: float = 750
 
 @export var angle_slerp_switch: float  = 0.55
-@export var continuous_slerp_rate: float = 2.0
+@export var continuous_slerp_rate: float = 3.0
 @export var distance_squared_abort_attack_threshold: int = 100000
 @export var distance_squared_abort_turn_threshold: int = 450000
 @export var distance_squared_start_turn_threshold: int = 900000
 @export var acceleration_factor: float = 50
-
 @onready var forward_raycast: RayCast2D = $Raycasts/Forward
 @onready var avoidance_multiplier: float = 100.0
 
@@ -42,11 +41,9 @@ func _ready() -> void:
 	target_player = get_tree().get_first_node_in_group("Players")
 	current_state = EnemyState.CREATE_DISTANCE
 	desired_direction = (global_position - target_player.global_position).normalized()
-	#previous_avoidance_vector = Vector2.LEFT
 
 
-func _physics_process(delta: float) -> void:
-	steering_timer += delta
+func _physics_process(delta: float) -> void:	
 	distance_to_player = position.distance_squared_to(target_player.global_position)
 	
 	if forward_raycast.is_colliding() && forward_raycast.get_collider().is_in_group("Players"):
@@ -60,16 +57,15 @@ func _physics_process(delta: float) -> void:
 		EnemyState.CREATE_DISTANCE:
 			create_distance_state(delta)
 	
-	if steering_timer > steering_interval:
-		steering_timer = 0.0
-		steered_direction = calculate_collision_steering_vector2()
+	print(EnemyState.find_key(current_state))
+	apply_steering(delta)
 	
 	current_direction = current_direction.slerp(steered_direction, steering_slerp_weight)	
 	rotation = rotate_toward(rotation, current_direction.angle(), max_turn_radians * delta)
 	velocity = current_direction * current_speed
 	
 	move_and_slide()
-		
+	collide_with_rigid_bodies()
 
 
 func turn_state(delta):
@@ -77,7 +73,7 @@ func turn_state(delta):
 	var direction_to_player: Vector2 = (target_player.global_position - global_position).normalized()
 	var angle_to_player: float = transform.x.angle_to(direction_to_player)	
 
-	if angle_to_player < angle_slerp_switch && distance_to_player < 500000:
+	if abs(angle_to_player) < angle_slerp_switch && distance_to_player < 500000:
 		steering_slerp_weight = continuous_slerp_rate * delta
 	else: 
 		steering_slerp_weight = 1 - exp(-turn_speed * delta)
@@ -90,7 +86,8 @@ func turn_state(delta):
 
 
 func create_distance_state(delta: float):
-	desired_direction = (global_position - target_player.global_position).normalized()
+	#desired_direction = (global_position - target_player.global_position).normalized()
+	desired_direction = current_direction
 	current_speed = move_toward(current_speed, move_speed, acceleration_factor * delta)
 	steering_slerp_weight = 1 - exp(-turn_speed * delta)
 	var distance_to_player_squared: float = global_position.distance_squared_to(target_player.global_position)
@@ -119,8 +116,8 @@ func fire():
 
 
 func calculate_collision_steering_vector2() -> Vector2:
-	var ray_length = 1200
-	var number_of_raycasts: int = 7
+	var ray_length = 500
+	var number_of_raycasts: int = 3
 	var raycast_direction_offset = deg_to_rad(degrees_between_raycasts)
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state	
 	avoidance_vector = Vector2.ZERO
@@ -133,15 +130,37 @@ func calculate_collision_steering_vector2() -> Vector2:
 			global_position + direction * ray_length,
 			self.collision_mask
 		)
+		
+		query.exclude = [self]
 		var result := space_state.intersect_ray(query)
-		if result:
-			var distance = max(global_position.distance_to(result.position), 20.0)
-			var avoidance_weight = 1.0 - (distance / ray_length)
-			avoidance_vector += result.normal * avoidance_weight * 2
-			avoidance_vector = previous_avoidance_vector.lerp(avoidance_vector, 0.15)
-			previous_avoidance_vector = avoidance_vector
+		if !result || result.collider.is_in_group("Players"):
+			continue;
+		
+		var distance = max(global_position.distance_to(result.position), 50.0)
+		var avoidance_weight = 1.0 - (distance / ray_length)
+		avoidance_vector += result.normal * avoidance_weight * 2
+		
+	avoidance_vector = previous_avoidance_vector.lerp(avoidance_vector, 0.2)
+	previous_avoidance_vector = avoidance_vector
 	
 	if avoidance_vector == Vector2.ZERO:
 		return desired_direction
 	
 	return (avoidance_vector + desired_direction).normalized()
+
+func apply_steering(delta: float):
+	steering_timer += delta
+	if steering_timer > steering_interval:
+		steering_timer = 0.0
+		steered_direction = calculate_collision_steering_vector2()
+
+func collide_with_rigid_bodies():
+	# apply rigid body collision calculations
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is RigidBody2D:
+			var push_direction = -collision.get_normal()
+			var push_force = 200.0
+			collider.apply_central_impulse(push_direction * push_force)
