@@ -61,7 +61,7 @@ z_index = -50
 position = Vector2(325, 180)
 
 [node name="Player" parent="." unique_id=1692925685 instance=ExtResource("2_bswci")]
-position = Vector2(-17, 177)
+position = Vector2(793, -756)
 continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 2
