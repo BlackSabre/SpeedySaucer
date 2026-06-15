@@ -7,9 +7,9 @@ extends CharacterBody2D
 
 @export var angle_slerp_switch: float  = 0.55
 @export var continuous_slerp_rate: float = 3.0
-@export var distance_squared_abort_attack_threshold: int = 100000
-@export var distance_squared_abort_turn_threshold: int = 450000
-@export var distance_squared_start_turn_threshold: int = 900000
+@export var abort_attack_distance_threshold: int = 1500
+@export var abort_turn_distance_threshold: int = 900
+@export var start_turn_distance_threshold: int = 800
 @export var acceleration_factor: float = 50
 @onready var forward_raycast: RayCast2D = $Raycasts/Forward
 @onready var avoidance_multiplier: float = 100.0
@@ -22,7 +22,7 @@ var target_player: RigidBody2D
 var current_state : EnemyState
 var steering_slerp_weight: float = 0.2
 var steering_timer: float
-var steering_interval: float = 0.1
+var steering_interval: float = 0.05
 var distance_to_player: float
 var avoidance_vector: Vector2
 var previous_avoidance_vector: Vector2
@@ -80,8 +80,9 @@ func turn_state(delta):
 	
 	desired_direction = direction_to_player
 	var distance_to_player_squared: float = global_position.distance_squared_to(target_player.global_position)
-
-	if distance_to_player_squared < distance_squared_abort_turn_threshold:
+	var abort_turn_distance_threshold_squared: float = abort_turn_distance_threshold * abort_turn_distance_threshold
+	
+	if distance_to_player_squared < abort_turn_distance_threshold_squared:
 		current_state = EnemyState.CREATE_DISTANCE
 
 
@@ -92,7 +93,7 @@ func create_distance_state(delta: float):
 	steering_slerp_weight = 1 - exp(-turn_speed * delta)
 	var distance_to_player_squared: float = global_position.distance_squared_to(target_player.global_position)
 
-	if distance_to_player_squared > distance_squared_start_turn_threshold:
+	if distance_to_player_squared > (start_turn_distance_threshold * start_turn_distance_threshold):
 		current_state = EnemyState.TURNING
 
 
@@ -106,7 +107,7 @@ func attack_run_state(delta: float):
 
 	var distance_to_player_squared: float = global_position.distance_squared_to(target_player.global_position)    
 	
-	if (distance_to_player_squared < distance_squared_abort_attack_threshold || 
+	if (distance_to_player_squared < (abort_attack_distance_threshold * abort_attack_distance_threshold) || 
 		forward_raycast.is_colliding() == false):
 		current_state = EnemyState.CREATE_DISTANCE
 
@@ -133,6 +134,7 @@ func calculate_collision_steering_vector2() -> Vector2:
 		
 		query.exclude = [self]
 		var result := space_state.intersect_ray(query)
+		if result: print(result.collider.name)
 		if !result || result.collider.is_in_group("Players"):
 			continue;
 		
@@ -148,11 +150,13 @@ func calculate_collision_steering_vector2() -> Vector2:
 	
 	return (avoidance_vector + desired_direction).normalized()
 
+
 func apply_steering(delta: float):
 	steering_timer += delta
 	if steering_timer > steering_interval:
 		steering_timer = 0.0
 		steered_direction = calculate_collision_steering_vector2()
+
 
 func collide_with_rigid_bodies():
 	# apply rigid body collision calculations

@@ -78,64 +78,66 @@ position = Vector2(400, 400)
 scale = Vector2(1, 19.5)
 texture = SubResource("GradientTexture1D_sk5k4")
 
-[node name="Meteor" parent="." unique_id=1806158858 instance=ExtResource("6_sk5k4")]
+[node name="Obstacles" type="Node2D" parent="." unique_id=1857828141]
+
+[node name="Meteor" parent="Obstacles" unique_id=1806158858 instance=ExtResource("6_sk5k4")]
 position = Vector2(760, -91)
 
-[node name="Meteor13" parent="." unique_id=1381015629 instance=ExtResource("6_sk5k4")]
+[node name="Meteor13" parent="Obstacles" unique_id=1085440658 instance=ExtResource("6_sk5k4")]
 position = Vector2(797, 20)
 
-[node name="Meteor14" parent="." unique_id=566818547 instance=ExtResource("6_sk5k4")]
+[node name="Meteor14" parent="Obstacles" unique_id=82658700 instance=ExtResource("6_sk5k4")]
 position = Vector2(837, 120)
 
-[node name="Meteor15" parent="." unique_id=1621136434 instance=ExtResource("6_sk5k4")]
+[node name="Meteor15" parent="Obstacles" unique_id=635379707 instance=ExtResource("6_sk5k4")]
 position = Vector2(923, 457)
 
-[node name="Meteor16" parent="." unique_id=2139428545 instance=ExtResource("6_sk5k4")]
+[node name="Meteor16" parent="Obstacles" unique_id=120373167 instance=ExtResource("6_sk5k4")]
 position = Vector2(1026, 551)
 
-[node name="Meteor17" parent="." unique_id=350973249 instance=ExtResource("6_sk5k4")]
+[node name="Meteor17" parent="Obstacles" unique_id=1582469535 instance=ExtResource("6_sk5k4")]
 position = Vector2(1126, 642)
 
-[node name="Meteor18" parent="." unique_id=856060478 instance=ExtResource("6_sk5k4")]
+[node name="Meteor18" parent="Obstacles" unique_id=320747736 instance=ExtResource("6_sk5k4")]
 position = Vector2(1294, 645)
 
-[node name="Meteor19" parent="." unique_id=439256530 instance=ExtResource("6_sk5k4")]
+[node name="Meteor19" parent="Obstacles" unique_id=477501332 instance=ExtResource("6_sk5k4")]
 position = Vector2(844, -165)
 
-[node name="Meteor20" parent="." unique_id=610120545 instance=ExtResource("6_sk5k4")]
+[node name="Meteor20" parent="Obstacles" unique_id=951481960 instance=ExtResource("6_sk5k4")]
 position = Vector2(1361, -191)
 
-[node name="Meteor7" parent="." unique_id=24059087 instance=ExtResource("6_sk5k4")]
+[node name="Meteor7" parent="Obstacles" unique_id=331344069 instance=ExtResource("6_sk5k4")]
 position = Vector2(768, -411)
 
-[node name="Meteor8" parent="." unique_id=138264612 instance=ExtResource("6_sk5k4")]
+[node name="Meteor8" parent="Obstacles" unique_id=484127909 instance=ExtResource("6_sk5k4")]
 position = Vector2(797, 234)
 
-[node name="Meteor9" parent="." unique_id=1087666869 instance=ExtResource("6_sk5k4")]
+[node name="Meteor9" parent="Obstacles" unique_id=511903863 instance=ExtResource("6_sk5k4")]
 position = Vector2(606, -565)
 
-[node name="Meteor10" parent="." unique_id=285092303 instance=ExtResource("6_sk5k4")]
+[node name="Meteor10" parent="Obstacles" unique_id=105680401 instance=ExtResource("6_sk5k4")]
 position = Vector2(206, 197)
 
-[node name="Meteor11" parent="." unique_id=1083835616 instance=ExtResource("6_sk5k4")]
+[node name="Meteor11" parent="Obstacles" unique_id=1269879794 instance=ExtResource("6_sk5k4")]
 position = Vector2(261, 317)
 
-[node name="Meteor12" parent="." unique_id=465965432 instance=ExtResource("6_sk5k4")]
+[node name="Meteor12" parent="Obstacles" unique_id=220814213 instance=ExtResource("6_sk5k4")]
 position = Vector2(169, 80)
 
-[node name="Meteor2" parent="." unique_id=506508114 instance=ExtResource("6_sk5k4")]
+[node name="Meteor2" parent="Obstacles" unique_id=1795902349 instance=ExtResource("6_sk5k4")]
 position = Vector2(794, -253)
 
-[node name="Meteor3" parent="." unique_id=569928320 instance=ExtResource("6_sk5k4")]
+[node name="Meteor3" parent="Obstacles" unique_id=1816476022 instance=ExtResource("6_sk5k4")]
 position = Vector2(94, -29)
 
-[node name="Meteor4" parent="." unique_id=1383361404 instance=ExtResource("6_sk5k4")]
+[node name="Meteor4" parent="Obstacles" unique_id=2014040027 instance=ExtResource("6_sk5k4")]
 position = Vector2(810, -543)
 
-[node name="Meteor5" parent="." unique_id=1497715365 instance=ExtResource("6_sk5k4")]
+[node name="Meteor5" parent="Obstacles" unique_id=577834186 instance=ExtResource("6_sk5k4")]
 position = Vector2(802, 371)
 
-[node name="Meteor6" parent="." unique_id=1582273366 instance=ExtResource("6_sk5k4")]
+[node name="Meteor6" parent="Obstacles" unique_id=1737148617 instance=ExtResource("6_sk5k4")]
 position = Vector2(802, 371)
 
 [connection signal="body_entered" from="Maze" to="." method="_on_maze_body_entered"]

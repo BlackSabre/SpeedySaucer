@@ -12,7 +12,9 @@ collision_mask = 10
 motion_mode = 1
 script = ExtResource("1_pqhw6")
 max_turn_radians = 5.0
-distance_squared_abort_turn_threshold = 75
+continuous_slerp_rate = 2.6
+abort_attack_distance_threshold = 100
+start_turn_distance_threshold = 2000
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=614230299]
 rotation = 4.712389
