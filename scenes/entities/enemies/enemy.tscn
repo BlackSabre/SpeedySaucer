@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="1_p7g5j"]
 [ext_resource type="Script" uid="uid://c0qh1fmykpbv" path="res://scenes/entities/enemies/enemy.gd" id="1_pqhw6"]
+[ext_resource type="Script" uid="uid://djtm6m7pe2p4r" path="res://scenes/entities/enemies/collision_raycasts.gd" id="2_c8ylr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p7g5j"]
 radius = 46.0
@@ -15,6 +16,10 @@ move_speed = 50.0
 continuous_slerp_rate = 2.7
 abort_attack_distance_threshold = 100
 start_turn_distance_threshold = 500
+number_of_raycasts = 3
+
+[node name="CollisionRaycasts" type="Node2D" parent="." unique_id=1887038665]
+script = ExtResource("2_c8ylr")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=614230299]
 rotation = 4.712389

@@ -28,7 +28,12 @@ var distance_to_player: float
 var avoidance_vector: Vector2
 var previous_avoidance_vector: Vector2
 
-var degrees_between_raycasts: int = 60
+# Raycast Info
+var raycast_length: int = 800
+@export var number_of_raycasts: int = 2
+var s
+var raycast_directions: Array[Vector2]
+@export var degrees_between_raycasts: int = 10
 
 enum EnemyState {
 	CREATE_DISTANCE,
@@ -122,66 +127,79 @@ func fire():
 
 
 func calculate_interest_map() -> Vector2:
-	var ray_length: int = 700
-	#var number_of_raycasts: int = 1
-	var raycast_direction_offset = deg_to_rad(degrees_between_raycasts)
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
-	
-	var direction = current_direction.normalized().rotated(raycast_direction_offset) * ray_length
 	var queries: Array[PhysicsRayQueryParameters2D]
+	var raycast_target_vectors: Array[Vector2] = create_raycast_target_vectors(true)
 	
-	var query = PhysicsRayQueryParameters2D.create(
-		global_position,
-		global_position + direction,
-		self.collision_mask
-	)
+	for target in raycast_target_vectors:		
+		var query = PhysicsRayQueryParameters2D.create(
+			global_position,
+			target,
+			self.collision_mask
+		)
 	
-	query.exclude = [self]	
-	#queries.append(query)
-	
-	direction = current_direction.normalized().rotated(-raycast_direction_offset) * ray_length
-	query = PhysicsRayQueryParameters2D.create(
-		global_position,
-		global_position + direction,
-		self.collision_mask
-	)	
-	query.exclude = [self]
-	queries.append(query)
-	
-	#print("CIDir: ", direction)
-	#print("CILen: ", direction.length())
-	
-	for ray_query in queries:
+		query.exclude = [self]
+		
 		var result := space_state.intersect_ray(query)
 		if result:
 			print(result.collider.name)	
 	
 	return Vector2.ONE
+
+
+func create_raycast_target_vectors(is_global_space: bool) -> Array[Vector2]:
+	var raycast_target_vector_arr: Array[Vector2] = []
+	var raycasts_per_side: int = floor(float(number_of_raycasts) / 2.0)	
+	var normalized_direction: Vector2 = current_direction.normalized()
+	var is_even = number_of_raycasts % 2 == 0
+	var offset = 0.5 if is_even else 0.0
 	
+	for i in range(number_of_raycasts):
+		var raycast_index: float = i - raycasts_per_side + offset
+		var raycast_direction_offset = deg_to_rad(degrees_between_raycasts * raycast_index)
+		var direction = normalized_direction.rotated(raycast_direction_offset) * raycast_length
+		var to_point = global_position + direction
+			
+		if is_global_space:
+			raycast_target_vector_arr.append(to_point)
+		else:
+			raycast_target_vector_arr.append(to_local(to_point))
 	
-func _draw():
-	var ray_length = 700
-	var raycast_direction_offset = deg_to_rad(degrees_between_raycasts)
-	var direction = current_direction.normalized().rotated(raycast_direction_offset) * ray_length
-	var to_points: Array[Vector2]
-	#print("DrDir: ", direction)
-	#print("DrLen: ", direction.length())
+	return raycast_target_vector_arr
+
+
+func create_raycast_target_vectors_old(is_global_space: bool) -> Array[Vector2]:
+	var raycast_target_vector_arr: Array[Vector2]
+	var raycasts_per_side: int = floor(float(number_of_raycasts) / 2.0)
+	var current_raycast_index = raycasts_per_side * -1
 	
-	#to_points.append(to_local(global_position + direction))
+	while current_raycast_index <= raycasts_per_side:
+		# Even numbers_of_raycasts will not have a raycast directly in front of them
+		if (current_raycast_index == 0 && number_of_raycasts % 2 == 0):
+			#pass
+			current_raycast_index += 1
+			continue
+		
+		var raycast_direction_offset = deg_to_rad(degrees_between_raycasts * current_raycast_index)
+		var direction = current_direction.normalized().rotated(raycast_direction_offset) * raycast_length
+		var to_point = global_position + direction;
+			
+		print(current_raycast_index)
+		current_raycast_index += 1
 	
-	direction = current_direction.normalized().rotated(-raycast_direction_offset) * ray_length
-	to_points.append(to_local(global_position + direction))
+		if is_global_space:
+			raycast_target_vector_arr.append(to_point)
+		else:
+			raycast_target_vector_arr.append(to_local(to_point))
 	
-	#print(scale)
-	#print(global_scale)
-	#print(some_direction)
+	return raycast_target_vector_arr;
 	
-	#var to_point = Vector2.RIGHT * 500
-	#degrees_between_raycasts = 180
-	#var to_point = Vec tor2.RIGHT.rotated(deg_to_rad(degrees_between_raycasts)) * 500
-	for point in to_points:
-		draw_line(Vector2.ZERO, point, Color.GREEN, 5)
-	
+
+func _draw():	
+	var raycast_target_vectors := create_raycast_target_vectors(false)
+	for target in raycast_target_vectors:
+		draw_line(Vector2.ZERO, target, Color.GREEN, 5)
+
 
 func calculate_collision_steering_vector2() -> Vector2:
 	var ray_length = 700
