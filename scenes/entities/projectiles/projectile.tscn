@@ -1,26 +1,21 @@
-[gd_scene format=3 uid="uid://mvh0g7obdpyp"]
+[gd_scene format=3 uid="uid://cb182f731msqr"]
 
-[ext_resource type="Script" uid="uid://b24eiw0ac44cl" path="res://scenes/entities/projectiles/projectile.gd" id="1_c8fcr"]
-[ext_resource type="Texture2D" uid="uid://vbqq3vksa13g" path="res://assets/kenney_space-shooter-redux/PNG/Lasers/laserBlue08.png" id="2_q3m7n"]
+[ext_resource type="Texture2D" uid="uid://vbqq3vksa13g" path="res://assets/kenney_space-shooter-redux/PNG/Lasers/laserBlue08.png" id="1_6ndfs"]
+[ext_resource type="Script" uid="uid://bk861o44kamwv" path="res://scenes/entities/projectiles/projectile.gd" id="1_kbb6n"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_q3m7n"]
-radius = 4.1231055
+[sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
+radius = 4.12
 
-[node name="Projectile" type="Node2D" unique_id=699661383]
-script = ExtResource("1_c8fcr")
+[node name="Projectile" type="Node2D" unique_id=582646542]
+script = ExtResource("1_kbb6n")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1141675799]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1633675418]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_q3m7n")
+texture = ExtResource("1_6ndfs")
 
-[node name="ProjectileArea" type="Area2D" parent="." unique_id=802264471]
-collision_layer = 16
-collision_mask = 14
+[node name="ProjectileArea" type="Area2D" parent="." unique_id=1349149715]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileArea" unique_id=833620598]
-shape = SubResource("CircleShape2D_q3m7n")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileArea" unique_id=1786881630]
+shape = SubResource("CircleShape2D_7i4tb")
 
-[node name="TimeToLiveTimer" type="Timer" parent="." unique_id=1871933353]
-wait_time = 5.0
-one_shot = true
-autostart = true
+[node name="TimeToLiveTimer" type="Timer" parent="." unique_id=1301854244]

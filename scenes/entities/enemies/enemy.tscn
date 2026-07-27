@@ -1,31 +1,21 @@
-[gd_scene format=3 uid="uid://j466a3wbwdij"]
+[gd_scene format=3 uid="uid://cpdbd8lt8t04w"]
 
-[ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="1_p7g5j"]
-[ext_resource type="Script" uid="uid://c0qh1fmykpbv" path="res://scenes/entities/enemies/enemy.gd" id="1_pqhw6"]
-[ext_resource type="Script" uid="uid://djtm6m7pe2p4r" path="res://scenes/entities/enemies/collision_raycasts.gd" id="2_c8ylr"]
+[ext_resource type="Script" uid="uid://bkfwwh4nvjceg" path="res://scenes/entities/enemies/enemy.gd" id="1_67neu"]
+[ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="2_ktqfp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p7g5j"]
-radius = 46.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
+radius = 36.013885
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1895133279]
+[node name="Enemy" type="CharacterBody2D" unique_id=1735677195]
 collision_layer = 4
 collision_mask = 14
-motion_mode = 1
-script = ExtResource("1_pqhw6")
-move_speed = 50.0
-continuous_slerp_rate = 2.7
-abort_attack_distance_threshold = 100
-start_turn_distance_threshold = 500
-number_of_raycasts = 3
+script = ExtResource("1_67neu")
+number_of_raycasts = 6
+degrees_between_raycasts = 20
 
-[node name="CollisionRaycasts" type="Node2D" parent="." unique_id=1887038665]
-script = ExtResource("2_c8ylr")
-
-[node name="Sprite" type="Sprite2D" parent="." unique_id=614230299]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2082000728]
 rotation = 4.712389
-texture = ExtResource("1_p7g5j")
-metadata/_edit_lock_ = true
+texture = ExtResource("2_ktqfp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2144381103]
-visible = false
-shape = SubResource("CircleShape2D_p7g5j")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1490024136]
+shape = SubResource("CircleShape2D_7i4tb")

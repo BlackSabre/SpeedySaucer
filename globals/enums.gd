@@ -1,6 +1,6 @@
 extends Node
 
 enum ProjectileSource {
-    PLAYER,
-    ENEMY,
+	PLAYER,
+	ENEMY,
 }

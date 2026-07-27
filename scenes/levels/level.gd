@@ -3,7 +3,7 @@ extends Node2D
 @onready var maze: Area2D = $Maze
 @onready var projectiles: Node = $Projectiles
 
-var projectile_scene: PackedScene = preload("uid://mvh0g7obdpyp")
+var projectile_scene: PackedScene = preload("uid://cb182f731msqr")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -3,7 +3,7 @@ class_name Weapon
 
 #@onready var weapon_sprite: Sprite2D = $Weapon
 @onready var projectile_marker: Marker2D = $ProjectileSpawnPosition
-@onready var projectile_scene: PackedScene = preload("uid://mvh0g7obdpyp")
+@onready var projectile_scene: PackedScene = preload("uid://cb182f731msqr")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

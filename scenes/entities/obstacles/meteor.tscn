@@ -1,14 +1,14 @@
-[gd_scene format=3 uid="uid://cm6rnfmka1yba"]
+[gd_scene format=3 uid="uid://dgt01joijnor1"]
 
 [ext_resource type="Texture2D" uid="uid://c0p1glwrhcs0n" path="res://assets/kenney_space-shooter-redux/PNG/Meteors/meteorGrey_big1.png" id="1_l8p7f"]
 
-[node name="Meteor" type="RigidBody2D" unique_id=1806158858]
+[node name="Meteor" type="RigidBody2D" unique_id=1280538884]
 collision_layer = 8
 collision_mask = 14
 gravity_scale = 0.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=351470618]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=616905564]
 texture = ExtResource("1_l8p7f")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=140661648]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1725209434]
 polygon = PackedVector2Array(-32, -39, -48, 9, -22, 39, 10, 27, 33, 31, 47, -1, 22, -39)

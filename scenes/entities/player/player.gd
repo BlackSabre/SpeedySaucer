@@ -5,11 +5,6 @@ extends RigidBody2D
 var force = 1000;
 
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
 func _process(_delta) -> void:
 	aim_weapon()
 

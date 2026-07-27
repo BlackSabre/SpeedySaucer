@@ -1,144 +1,61 @@
-[gd_scene format=3 uid="uid://ccuqltjtvpvt0"]
+[gd_scene format=3 uid="uid://dp2j8nl5borfm"]
 
-[ext_resource type="Texture2D" uid="uid://bhjti7w3biktm" path="res://assets/kenney_space-shooter-redux/Backgrounds/purple.png" id="1_014kd"]
-[ext_resource type="Script" uid="uid://di480wyfy27y3" path="res://scenes/levels/level.gd" id="1_rus8k"]
-[ext_resource type="PackedScene" uid="uid://c3f6hfoyccp8s" path="res://scenes/entities/player/player.tscn" id="2_bswci"]
-[ext_resource type="PackedScene" uid="uid://dqaxrpytcrxx0" path="res://scenes/levels/mazes/maze.tscn" id="4_5xbjy"]
-[ext_resource type="PackedScene" uid="uid://j466a3wbwdij" path="res://scenes/entities/enemies/enemy.tscn" id="5_6761a"]
-[ext_resource type="PackedScene" uid="uid://cm6rnfmka1yba" path="res://scenes/entities/obstacles/meteor.tscn" id="6_sk5k4"]
+[ext_resource type="Script" uid="uid://cb6rkhslql4tn" path="res://scenes/levels/level.gd" id="1_ksju7"]
+[ext_resource type="Texture2D" uid="uid://bhjti7w3biktm" path="res://assets/kenney_space-shooter-redux/Backgrounds/purple.png" id="2_6iamk"]
+[ext_resource type="PackedScene" uid="uid://c4rxuqscqfmt1" path="res://scenes/levels/mazes/Maze.tscn" id="3_nsrm0"]
+[ext_resource type="PackedScene" uid="uid://dwqp8t7tsynbh" path="res://scenes/entities/player/player.tscn" id="4_6761a"]
+[ext_resource type="PackedScene" uid="uid://cpdbd8lt8t04w" path="res://scenes/entities/enemies/enemy.tscn" id="5_sk5k4"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_5xbjy"]
-font_size = 32
+[node name="Level1" type="Node2D" unique_id=1798295901]
+script = ExtResource("1_ksju7")
 
-[sub_resource type="Gradient" id="Gradient_6761a"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 0, 1, 1)
+[node name="Graphics" type="Node" parent="." unique_id=587375416]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_sk5k4"]
-gradient = SubResource("Gradient_6761a")
-width = 20
-
-[node name="Level1" type="Node2D" unique_id=748020803]
-script = ExtResource("1_rus8k")
-
-[node name="Graphics" type="Node" parent="." unique_id=1373886588]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Graphics" unique_id=268578808]
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics" unique_id=1133825115]
 layer = -10
 
-[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer" unique_id=769992925]
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer" unique_id=1393742837]
 z_index = -100
-texture_repeat = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = 9.0
+offset_right = -9.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.02606, 1.01299)
-texture = ExtResource("1_014kd")
+texture = ExtResource("2_6iamk")
 stretch_mode = 1
+metadata/_edit_lock_ = true
 
-[node name="StartLabel" type="Label" parent="Graphics" unique_id=1313717289]
-z_index = -25
-offset_left = 274.0
-offset_top = 71.0
-offset_right = 369.0
-offset_bottom = 116.0
+[node name="StartLabel" type="Label" parent="Graphics" unique_id=605211294]
+offset_right = 40.0
+offset_bottom = 23.0
 text = "START"
-label_settings = SubResource("LabelSettings_5xbjy")
+metadata/_edit_lock_ = true
 
-[node name="EndLabel" type="Label" parent="Graphics" unique_id=1707938077]
-z_index = -25
-offset_left = 3904.0
-offset_top = -1428.0
-offset_right = 3999.0
-offset_bottom = -1383.0
-text = "END"
-label_settings = SubResource("LabelSettings_5xbjy")
+[node name="EndLabel" type="Label" parent="Graphics" unique_id=912139306]
+offset_right = 34.0
+offset_bottom = 49.0
+size_flags_horizontal = 6
+text = "END
+"
+metadata/_edit_lock_ = true
 
-[node name="Maze" parent="." unique_id=1451056539 instance=ExtResource("4_5xbjy")]
+[node name="Maze" parent="." unique_id=847609853 instance=ExtResource("3_nsrm0")]
 z_index = -50
-position = Vector2(325, 180)
+metadata/_edit_lock_ = true
 
-[node name="Player" parent="." unique_id=1692925685 instance=ExtResource("2_bswci")]
-position = Vector2(793, -756)
-continuous_cd = 1
-contact_monitor = true
-max_contacts_reported = 2
+[node name="Player" parent="." unique_id=221803027 instance=ExtResource("4_6761a")]
+position = Vector2(-334, 322)
+metadata/_edit_lock_ = true
 
-[node name="Projectiles" type="Node" parent="." unique_id=1645752010]
+[node name="Projectiles" type="Node" parent="." unique_id=310741646]
 
-[node name="Enemies" type="Node" parent="." unique_id=1807748713]
+[node name="Enemies" type="Node" parent="." unique_id=862519078]
 
-[node name="Enemy" parent="Enemies" unique_id=1895133279 instance=ExtResource("5_6761a")]
-position = Vector2(1174, -651)
+[node name="Enemy" parent="Enemies" unique_id=1735677195 instance=ExtResource("5_sk5k4")]
+position = Vector2(-858, 265)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1218887566]
-position = Vector2(400, 400)
-scale = Vector2(1, 19.5)
-texture = SubResource("GradientTexture1D_sk5k4")
-
-[node name="Obstacles" type="Node2D" parent="." unique_id=1857828141]
-
-[node name="Meteor" parent="Obstacles" unique_id=1806158858 instance=ExtResource("6_sk5k4")]
-position = Vector2(760, -91)
-
-[node name="Meteor13" parent="Obstacles" unique_id=1085440658 instance=ExtResource("6_sk5k4")]
-position = Vector2(797, 20)
-
-[node name="Meteor14" parent="Obstacles" unique_id=82658700 instance=ExtResource("6_sk5k4")]
-position = Vector2(837, 120)
-
-[node name="Meteor15" parent="Obstacles" unique_id=635379707 instance=ExtResource("6_sk5k4")]
-position = Vector2(923, 457)
-
-[node name="Meteor16" parent="Obstacles" unique_id=120373167 instance=ExtResource("6_sk5k4")]
-position = Vector2(1026, 551)
-
-[node name="Meteor17" parent="Obstacles" unique_id=1582469535 instance=ExtResource("6_sk5k4")]
-position = Vector2(1126, 642)
-
-[node name="Meteor18" parent="Obstacles" unique_id=320747736 instance=ExtResource("6_sk5k4")]
-position = Vector2(1294, 645)
-
-[node name="Meteor19" parent="Obstacles" unique_id=477501332 instance=ExtResource("6_sk5k4")]
-position = Vector2(844, -165)
-
-[node name="Meteor20" parent="Obstacles" unique_id=951481960 instance=ExtResource("6_sk5k4")]
-position = Vector2(1361, -191)
-
-[node name="Meteor7" parent="Obstacles" unique_id=331344069 instance=ExtResource("6_sk5k4")]
-position = Vector2(768, -411)
-
-[node name="Meteor8" parent="Obstacles" unique_id=484127909 instance=ExtResource("6_sk5k4")]
-position = Vector2(797, 234)
-
-[node name="Meteor9" parent="Obstacles" unique_id=511903863 instance=ExtResource("6_sk5k4")]
-position = Vector2(606, -565)
-
-[node name="Meteor10" parent="Obstacles" unique_id=105680401 instance=ExtResource("6_sk5k4")]
-position = Vector2(206, 197)
-
-[node name="Meteor11" parent="Obstacles" unique_id=1269879794 instance=ExtResource("6_sk5k4")]
-position = Vector2(261, 317)
-
-[node name="Meteor12" parent="Obstacles" unique_id=220814213 instance=ExtResource("6_sk5k4")]
-position = Vector2(169, 80)
-
-[node name="Meteor2" parent="Obstacles" unique_id=1795902349 instance=ExtResource("6_sk5k4")]
-position = Vector2(794, -253)
-
-[node name="Meteor3" parent="Obstacles" unique_id=1816476022 instance=ExtResource("6_sk5k4")]
-position = Vector2(94, -29)
-
-[node name="Meteor4" parent="Obstacles" unique_id=2014040027 instance=ExtResource("6_sk5k4")]
-position = Vector2(810, -543)
-
-[node name="Meteor5" parent="Obstacles" unique_id=577834186 instance=ExtResource("6_sk5k4")]
-position = Vector2(802, 371)
-
-[node name="Meteor6" parent="Obstacles" unique_id=1737148617 instance=ExtResource("6_sk5k4")]
-position = Vector2(802, 371)
-
-[connection signal="body_entered" from="Maze" to="." method="_on_maze_body_entered"]
-[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
+[node name="Obstacles" type="Node2D" parent="." unique_id=811036353]

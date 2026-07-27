@@ -8,31 +8,22 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
-config/name="SpeedySaucer"
-run/main_scene="uid://ccuqltjtvpvt0"
-config/features=PackedStringArray("4.7", "GL Compatibility")
+config/name="SpeedySaucerFixed"
+run/main_scene="uid://dp2j8nl5borfm"
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-DialogueManager="*uid://c3rodes2l3gxb"
-GlobalSignals="*uid://0vim06vuayex"
-Enums="*uid://dndpx4qqge47l"
+Enums="*uid://du5xcpjl86ynd"
+GlobalSignals="*uid://dk1y47ssswx2p"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [global_group]
 
@@ -71,10 +62,11 @@ move_down={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Meteors"
-2d_physics/layer_5="Projectiles"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+rendering_device/driver.windows="d3d12"

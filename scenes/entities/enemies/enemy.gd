@@ -20,7 +20,7 @@ var current_direction: Vector2 = Vector2(1,0)
 var desired_direction: Vector2 = Vector2(1,0) # Direction to goal
 var steered_direction: Vector2 = Vector2(1,0) # Direction with steering taken into account
 var target_player: RigidBody2D
-var current_state : EnemyState
+var current_state: EnemyState
 var steering_slerp_weight: float = 0.2
 var steering_timer: float
 var steering_interval: float = 0.05
@@ -31,7 +31,7 @@ var previous_avoidance_vector: Vector2
 # Raycast Info
 var raycast_length: int = 800
 @export var number_of_raycasts: int = 2
-var s
+var raycast_weight_dict: Dictionary[Vector2, int]
 var raycast_directions: Array[Vector2]
 @export var degrees_between_raycasts: int = 10
 
@@ -66,9 +66,11 @@ func _physics_process(delta: float) -> void:
 	#print(EnemyState.find_key(current_state))
 	apply_steering(delta)
 	
-	#print(steered_direction)
-	#current_direction = current_direction.slerp(steered_direction, steering_slerp_weight)
-	current_direction = Vector2(1.0, 1.0)
+	#current_direction = current_direction.slerp(steered_direction, 0.0010)
+	#current_direction = current_direction.slerp(steered_direction, 0.002)
+	current_direction = current_direction.slerp(steered_direction, 0.02)
+	
+	
 	rotation = rotate_toward(rotation, current_direction.angle(), max_turn_radians * delta)
 	velocity = current_direction * current_speed
 	
@@ -130,26 +132,43 @@ func calculate_interest_map() -> Vector2:
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 	var queries: Array[PhysicsRayQueryParameters2D]
 	var raycast_target_vectors: Array[Vector2] = create_raycast_target_vectors(true)
+	var return_vector: Vector2
 	
-	for target in raycast_target_vectors:		
+	raycast_weight_dict.clear()
+	for target in raycast_target_vectors:
 		var query = PhysicsRayQueryParameters2D.create(
 			global_position,
 			target,
 			self.collision_mask
 		)
-	
 		query.exclude = [self]
+		
+		var direction_to_target: Vector2 = global_position.direction_to(target)
 		
 		var result := space_state.intersect_ray(query)
 		if result:
-			print(result.collider.name)	
+			print(result.collider.name)
+			
+			raycast_weight_dict[direction_to_target] = -1#(global_position.distance_squared_to(result.collider.global_position) * 10000)
+		else:
+			raycast_weight_dict[direction_to_target] = 1
 	
-	return Vector2.ONE
+	for direction in raycast_weight_dict.keys():
+		return_vector += direction * raycast_weight_dict[direction]
+		print(return_vector.normalized())
+	
+	# add player
+	var distance_to_player: float = global_position.distance_squared_to(target_player.global_position)
+	if (distance_to_player > abort_attack_distance_threshold * abort_attack_distance_threshold):
+		print("adding player vector")
+		return_vector += (target_player.global_position - global_position).normalized() * 10
+	
+	return return_vector.normalized()
 
 
 func create_raycast_target_vectors(is_global_space: bool) -> Array[Vector2]:
 	var raycast_target_vector_arr: Array[Vector2] = []
-	var raycasts_per_side: int = floor(float(number_of_raycasts) / 2.0)	
+	var raycasts_per_side: int = floor(float(number_of_raycasts) / 2.0)
 	var normalized_direction: Vector2 = current_direction.normalized()
 	var is_even = number_of_raycasts % 2 == 0
 	var offset = 0.5 if is_even else 0.0
@@ -168,34 +187,7 @@ func create_raycast_target_vectors(is_global_space: bool) -> Array[Vector2]:
 	return raycast_target_vector_arr
 
 
-func create_raycast_target_vectors_old(is_global_space: bool) -> Array[Vector2]:
-	var raycast_target_vector_arr: Array[Vector2]
-	var raycasts_per_side: int = floor(float(number_of_raycasts) / 2.0)
-	var current_raycast_index = raycasts_per_side * -1
-	
-	while current_raycast_index <= raycasts_per_side:
-		# Even numbers_of_raycasts will not have a raycast directly in front of them
-		if (current_raycast_index == 0 && number_of_raycasts % 2 == 0):
-			#pass
-			current_raycast_index += 1
-			continue
-		
-		var raycast_direction_offset = deg_to_rad(degrees_between_raycasts * current_raycast_index)
-		var direction = current_direction.normalized().rotated(raycast_direction_offset) * raycast_length
-		var to_point = global_position + direction;
-			
-		print(current_raycast_index)
-		current_raycast_index += 1
-	
-		if is_global_space:
-			raycast_target_vector_arr.append(to_point)
-		else:
-			raycast_target_vector_arr.append(to_local(to_point))
-	
-	return raycast_target_vector_arr;
-	
-
-func _draw():	
+func _draw():
 	var raycast_target_vectors := create_raycast_target_vectors(false)
 	for target in raycast_target_vectors:
 		draw_line(Vector2.ZERO, target, Color.GREEN, 5)
@@ -253,5 +245,5 @@ func collide_with_rigid_bodies():
 		
 		if collider is RigidBody2D:
 			var push_direction = -collision.get_normal()
-			var push_force = 200.0
+			var push_force = 10.0
 			collider.apply_central_impulse(push_direction * push_force)
