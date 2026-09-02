@@ -2,16 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bkfwwh4nvjceg" path="res://scenes/entities/enemies/enemy.gd" id="1_67neu"]
 [ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="2_ktqfp"]
+[ext_resource type="PackedScene" uid="uid://d0ff62v2gku3o" path="res://scenes/entities/utilities/raycaster/raycaster.tscn" id="3_c8ylr"]
+[ext_resource type="Script" uid="uid://cl4i3fqnwfhwg" path="res://scenes/entities/utilities/steering_behaviours/steering_manager.gd" id="4_pm80n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1735677195]
+[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("raycaster", "steering_manager")]
 collision_layer = 4
 collision_mask = 14
 script = ExtResource("1_67neu")
-number_of_raycasts = 6
-degrees_between_raycasts = 20
+move_speed = 100.0
+raycaster = NodePath("Raycaster")
+steering_manager = NodePath("SteeringManager")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2082000728]
 rotation = 4.712389
@@ -19,3 +22,11 @@ texture = ExtResource("2_ktqfp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1490024136]
 shape = SubResource("CircleShape2D_7i4tb")
+
+[node name="Raycaster" parent="." unique_id=408926492 instance=ExtResource("3_c8ylr")]
+raycast_length = 1600
+number_of_raycasts = 6
+debug = true
+
+[node name="SteeringManager" type="Node2D" parent="." unique_id=1099006069]
+script = ExtResource("4_pm80n")

@@ -1,14 +1,29 @@
 [gd_scene format=3 uid="uid://dgt01joijnor1"]
 
+[ext_resource type="Script" uid="uid://b5ab3r31p12ta" path="res://scenes/entities/obstacles/meteor.gd" id="1_j5rr5"]
 [ext_resource type="Texture2D" uid="uid://c0p1glwrhcs0n" path="res://assets/kenney_space-shooter-redux/PNG/Meteors/meteorGrey_big1.png" id="1_l8p7f"]
+[ext_resource type="Shader" uid="uid://cpsd1nb5felt" path="res://shaders/outline.gdshader" id="2_jukd0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jukd0"]
+resource_local_to_scene = true
+shader = ExtResource("2_jukd0")
+shader_parameter/allow_out_of_bounds = true
+shader_parameter/outline_thickness = 7.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [node name="Meteor" type="RigidBody2D" unique_id=1280538884]
 collision_layer = 8
 collision_mask = 14
 gravity_scale = 0.0
+script = ExtResource("1_j5rr5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=616905564]
+material = SubResource("ShaderMaterial_jukd0")
 texture = ExtResource("1_l8p7f")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1725209434]
 polygon = PackedVector2Array(-32, -39, -48, 9, -22, 39, 10, 27, 33, 31, 47, -1, 22, -39)
+
+[node name="Timer" type="Timer" parent="." unique_id=332119891]
+wait_time = 1.5
+one_shot = true

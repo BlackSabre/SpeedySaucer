@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d0ff62v2gku3o"]
+
+[ext_resource type="Script" uid="uid://c1faskok7cv1g" path="res://scenes/entities/utilities/raycaster/raycaster.gd" id="1_37rn3"]
+
+[node name="Raycaster" type="Node2D" unique_id=408926492]
+script = ExtResource("1_37rn3")

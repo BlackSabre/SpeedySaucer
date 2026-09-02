@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c4rxuqscqfmt1" path="res://scenes/levels/mazes/Maze.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://dwqp8t7tsynbh" path="res://scenes/entities/player/player.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://cpdbd8lt8t04w" path="res://scenes/entities/enemies/enemy.tscn" id="5_sk5k4"]
+[ext_resource type="PackedScene" uid="uid://dgt01joijnor1" path="res://scenes/entities/obstacles/meteor.tscn" id="6_sk5k4"]
 
 [node name="Level1" type="Node2D" unique_id=1798295901]
 script = ExtResource("1_ksju7")
@@ -56,6 +57,31 @@ metadata/_edit_lock_ = true
 [node name="Enemies" type="Node" parent="." unique_id=862519078]
 
 [node name="Enemy" parent="Enemies" unique_id=1735677195 instance=ExtResource("5_sk5k4")]
-position = Vector2(-858, 265)
+position = Vector2(960, 322)
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
+
+[node name="Meteor" parent="Obstacles" unique_id=1280538884 instance=ExtResource("6_sk5k4")]
+position = Vector2(341, 647)
+
+[node name="Meteor4" parent="Obstacles" unique_id=315579346 instance=ExtResource("6_sk5k4")]
+position = Vector2(77, 428)
+
+[node name="Meteor5" parent="Obstacles" unique_id=1066401729 instance=ExtResource("6_sk5k4")]
+position = Vector2(-44, 337)
+
+[node name="Meteor3" parent="Obstacles" unique_id=853435240 instance=ExtResource("6_sk5k4")]
+position = Vector2(-166, 322)
+
+[node name="Meteor6" parent="Obstacles" unique_id=1818113626 instance=ExtResource("6_sk5k4")]
+position = Vector2(-174, 252)
+
+[node name="Meteor7" parent="Obstacles" unique_id=708217063 instance=ExtResource("6_sk5k4")]
+position = Vector2(-180, 189)
+
+[node name="Meteor8" parent="Obstacles" unique_id=998563815 instance=ExtResource("6_sk5k4")]
+position = Vector2(-181, 106)
+
+[node name="Meteor2" parent="Obstacles" unique_id=1143422152 instance=ExtResource("6_sk5k4")]
+position = Vector2(192.00006, 519.00006)
+rotation = -0.0046031075
