@@ -7,7 +7,7 @@ static func calculate_raycast_target_positions(
 		return PackedVector2Array()
 	
 	var source_global_position := raycaster_settings.source_global_position
-	var raycast_length := raycaster_settings.raycast_length
+	var ray_length := raycaster_settings.ray_length
 	var number_of_raycasts := raycaster_settings.number_of_raycasts
 	var degrees_between_raycasts := raycaster_settings.degrees_between_raycasts	
 	var raycast_target_position_array := PackedVector2Array()
@@ -18,7 +18,7 @@ static func calculate_raycast_target_positions(
 	for i in range(number_of_raycasts):
 		var raycast_index: float = i - raycasts_per_side + number_of_raycasts_offset
 		var raycast_direction_offset: float = deg_to_rad(degrees_between_raycasts * raycast_index)
-		var direction: Vector2 = normalized_direction.rotated(raycast_direction_offset) * raycast_length
+		var direction: Vector2 = normalized_direction.rotated(raycast_direction_offset) * ray_length
 		raycast_target_position_array.append(source_global_position + direction)
 	
 	return raycast_target_position_array

@@ -20,7 +20,7 @@ extends CharacterBody2D
 var current_speed: float
 var target_speed: float
 var current_direction: Vector2 = Vector2(1, 0)
-var desired_direction: Vector2 = Vector2(1, 0) # Direction to goal
+var desired_normalized_direction: Vector2 = Vector2(1, 0)
 var steered_direction: Vector2 = Vector2(1, 0)
 
 #var target_player: RigidBody2D
@@ -32,7 +32,6 @@ var avoidance_vector: Vector2
 var previous_avoidance_vector: Vector2
 
 #temp
-var raycast_weight_dict: Dictionary[Vector2, int]
 var target_player
 
 enum EnemyState {
@@ -46,43 +45,39 @@ func _ready() -> void:
 	current_speed = move_speed
 	current_state = EnemyState.CREATE_DISTANCE
 	target_player = get_tree().get_first_node_in_group("Players")
-	desired_direction = (target_player.global_position - global_position).normalized()
+	desired_normalized_direction = (target_player.global_position - global_position).normalized()
+	look_at(target_player.global_position)
 
 
-func _physics_process(delta: float) -> void:	
-	#var raycast_target_positions := raycaster.calculate_raycast_target_positions(global_position, desired_direction)
-	var raycast_result_data := raycaster.cast_rays_for_direction(desired_direction)
-	var target_global_positions: Array[Vector2]
-	target_global_positions.append(target_player.global_position)
+func _physics_process(_delta: float) -> void:
+	var ray_result_data: Array[RayResult] = _calculate_ray_data()
+	var weighted_goal_direction: Vector2 = _calculate_direction(ray_result_data)
 	
-	var exclusion_rid_array: Array[RID] = [self.get_rid(), target_player.get_rid()]
-	#var steering_manager_settings = SteeringManagerSettings.new()
-	#steering_manager_settings.source_global_position = global_position
-	#steering_manager_settings.target_global_positions = target_global_positions
-	#steering_manager_settings.raycast_target_positions = raycast_target_positions
-	#steering_manager_settings.degrees_between_raycasts = raycaster.degrees_between_raycasts
-	#steering_manager_settings.current_direction = Vector2.LEFT
-	#steering_manager_settings.space_state = get_world_2d().direct_space_state
-	#steering_manager_settings.exclusion_rid_array = exclusion_rid_array
-	#steering_manager_settings.collision_mask = collision_mask
-	#var weighted_goal_direction: Vector2 = steering_manager.calculate(steering_manager_settings)
-#
-	#velocity = weighted_goal_direction * move_speed
-	velocity = Vector2.LEFT * move_speed
+	var angle = weighted_goal_direction.angle()
+	print(weighted_goal_direction)
 	
+	rotation = lerp_angle(rotation, angle, 0.05)
+	velocity = weighted_goal_direction * move_speed
+	 
 	move_and_slide()
 
 
-func test():
-	for raycast_target: Vector2 in raycaster.calculate_raycast_target_positions(global_position, (target_player.global_position - global_position).normalized()):
-		var raycast_query = PhysicsRayQueryParameters2D.create(
-			global_position,
-			raycast_target
-		)
-		
-		raycast_query.exclude = [self]
-		var raycast_result := get_world_2d().direct_space_state.intersect_ray(raycast_query)
-		print(raycast_result)
-		
-		if raycast_result:
-			print(raycast_result.collider.name)
+func _calculate_ray_data() -> Array[RayResult]:
+	var ray_exclusion_rid_array: Array[RID] = [self.get_rid(), target_player.get_rid()]
+	desired_normalized_direction = (target_player.global_position - global_position).normalized()
+	return raycaster.cast_rays_in_direction(desired_normalized_direction, collision_mask, ray_exclusion_rid_array)
+
+
+func _calculate_direction(ray_result_data: Array[RayResult]):
+	var steering_manager_settings = SteeringManagerSettings.new()
+	var target_global_positions: Array[Vector2]
+	
+	target_global_positions.append(target_player.global_position)
+	steering_manager_settings.source_global_position = global_position
+	steering_manager_settings.target_global_positions = target_global_positions
+	steering_manager_settings.normalized_current_direction = Vector2.RIGHT
+	steering_manager_settings.ray_results = ray_result_data
+	steering_manager_settings.target_global_positions = target_global_positions
+	steering_manager_settings.ray_length = raycaster.ray_length
+	
+	return steering_manager.calculate_direction(steering_manager_settings)

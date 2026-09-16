@@ -12,7 +12,7 @@ radius = 36.013885
 collision_layer = 4
 collision_mask = 14
 script = ExtResource("1_67neu")
-move_speed = 100.0
+move_speed = 200.0
 raycaster = NodePath("Raycaster")
 steering_manager = NodePath("SteeringManager")
 
@@ -24,8 +24,7 @@ texture = ExtResource("2_ktqfp")
 shape = SubResource("CircleShape2D_7i4tb")
 
 [node name="Raycaster" parent="." unique_id=408926492 instance=ExtResource("3_c8ylr")]
-raycast_length = 1600
-number_of_raycasts = 6
+number_of_raycasts = 8
 debug = true
 
 [node name="SteeringManager" type="Node2D" parent="." unique_id=1099006069]

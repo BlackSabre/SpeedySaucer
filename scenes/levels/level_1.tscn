@@ -57,31 +57,88 @@ metadata/_edit_lock_ = true
 [node name="Enemies" type="Node" parent="." unique_id=862519078]
 
 [node name="Enemy" parent="Enemies" unique_id=1735677195 instance=ExtResource("5_sk5k4")]
-position = Vector2(960, 322)
+position = Vector2(1443, 322)
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
 
 [node name="Meteor" parent="Obstacles" unique_id=1280538884 instance=ExtResource("6_sk5k4")]
-position = Vector2(341, 647)
+position = Vector2(489, 1375)
 
 [node name="Meteor4" parent="Obstacles" unique_id=315579346 instance=ExtResource("6_sk5k4")]
-position = Vector2(77, 428)
+position = Vector2(308, 1188)
 
 [node name="Meteor5" parent="Obstacles" unique_id=1066401729 instance=ExtResource("6_sk5k4")]
-position = Vector2(-44, 337)
+position = Vector2(187, 1097)
 
 [node name="Meteor3" parent="Obstacles" unique_id=853435240 instance=ExtResource("6_sk5k4")]
-position = Vector2(-166, 322)
+position = Vector2(65, 1082)
 
 [node name="Meteor6" parent="Obstacles" unique_id=1818113626 instance=ExtResource("6_sk5k4")]
-position = Vector2(-174, 252)
+position = Vector2(57, 1012)
 
 [node name="Meteor7" parent="Obstacles" unique_id=708217063 instance=ExtResource("6_sk5k4")]
-position = Vector2(-180, 189)
+position = Vector2(51, 949)
 
 [node name="Meteor8" parent="Obstacles" unique_id=998563815 instance=ExtResource("6_sk5k4")]
-position = Vector2(-181, 106)
+position = Vector2(278, 314)
+
+[node name="Meteor23" parent="Obstacles" unique_id=1307403695 instance=ExtResource("6_sk5k4")]
+position = Vector2(228, 356)
+
+[node name="Meteor12" parent="Obstacles" unique_id=1916097764 instance=ExtResource("6_sk5k4")]
+position = Vector2(273, 226)
+
+[node name="Meteor13" parent="Obstacles" unique_id=450761898 instance=ExtResource("6_sk5k4")]
+position = Vector2(273, 408)
+
+[node name="Meteor14" parent="Obstacles" unique_id=153566619 instance=ExtResource("6_sk5k4")]
+position = Vector2(268, 491)
+
+[node name="Meteor15" parent="Obstacles" unique_id=880805355 instance=ExtResource("6_sk5k4")]
+position = Vector2(271, 571)
+
+[node name="Meteor16" parent="Obstacles" unique_id=366377064 instance=ExtResource("6_sk5k4")]
+position = Vector2(266, 651)
+
+[node name="Meteor17" parent="Obstacles" unique_id=822894122 instance=ExtResource("6_sk5k4")]
+position = Vector2(268, -23)
+
+[node name="Meteor24" parent="Obstacles" unique_id=1915871595 instance=ExtResource("6_sk5k4")]
+position = Vector2(275, 32)
+
+[node name="Meteor25" parent="Obstacles" unique_id=1172184504 instance=ExtResource("6_sk5k4")]
+position = Vector2(268, 87)
+
+[node name="Meteor26" parent="Obstacles" unique_id=1636893532 instance=ExtResource("6_sk5k4")]
+position = Vector2(261, 156)
+
+[node name="Meteor18" parent="Obstacles" unique_id=1656856207 instance=ExtResource("6_sk5k4")]
+position = Vector2(271, -221)
+
+[node name="Meteor19" parent="Obstacles" unique_id=305438680 instance=ExtResource("6_sk5k4")]
+position = Vector2(359, 372)
+
+[node name="Meteor20" parent="Obstacles" unique_id=1358321380 instance=ExtResource("6_sk5k4")]
+position = Vector2(274, -86)
+
+[node name="Meteor21" parent="Obstacles" unique_id=1157344193 instance=ExtResource("6_sk5k4")]
+position = Vector2(264, 726)
+
+[node name="Meteor22" parent="Obstacles" unique_id=360178659 instance=ExtResource("6_sk5k4")]
+position = Vector2(267, -158)
 
 [node name="Meteor2" parent="Obstacles" unique_id=1143422152 instance=ExtResource("6_sk5k4")]
-position = Vector2(192.00006, 519.00006)
+position = Vector2(423.0001, 1279.0001)
+rotation = -0.0046031075
+
+[node name="Meteor9" parent="Obstacles" unique_id=430713584 instance=ExtResource("6_sk5k4")]
+position = Vector2(294, 1293)
+rotation = -0.0046031075
+
+[node name="Meteor10" parent="Obstacles" unique_id=1122485449 instance=ExtResource("6_sk5k4")]
+position = Vector2(172.00002, 1201)
+rotation = -0.0046031075
+
+[node name="Meteor11" parent="Obstacles" unique_id=1992136910 instance=ExtResource("6_sk5k4")]
+position = Vector2(172.00002, 1201)
 rotation = -0.0046031075
