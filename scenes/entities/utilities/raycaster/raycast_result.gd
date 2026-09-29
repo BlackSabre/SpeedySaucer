@@ -7,6 +7,7 @@ var hit_position: Vector2
 var normal: Vector2
 var distance_to_hit: float
 var collider: Variant
+var is_wall: bool = false
 
 func print_values():
 	var direction_str = "direction: %s, target_position: %s, hit_position: %s, distance_to_hit: %s, collider: %s" % [normalized_direction, target_position, hit_position, distance_to_hit, collider.name if hit else null]

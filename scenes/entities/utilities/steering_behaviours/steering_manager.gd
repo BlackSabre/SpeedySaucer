@@ -1,6 +1,6 @@
-class_name SteeringManager extends Node2D
+class_name SteeringManager extends RefCounted
 
-func calculate_direction(steering_manager_settings: SteeringManagerSettings) -> Vector2:
+static func calculate_direction(steering_manager_settings: SteeringManagerSettings) -> Vector2:
 	var interest_weights: Array[float] = []
 	var danger_weights: Array[float] = []
 	var final_interest_weights: Array[float] = []
@@ -12,6 +12,8 @@ func calculate_direction(steering_manager_settings: SteeringManagerSettings) -> 
 	
 	assert(ray_length > 0)
 	
+	ray_results = _detect_wall_hits(ray_results)
+	
 	for ray: RayResult in ray_results:
 		var danger_weight: float = _calculate_danger_weight(ray, ray_length)
 		var interest_weight: float = _calculate_interest_weight(ray, normalized_current_direction, source_global_position, target_global_positions)
@@ -20,27 +22,26 @@ func calculate_direction(steering_manager_settings: SteeringManagerSettings) -> 
 		interest_weights.append(interest_weight)
 	
 	danger_weights = _propagate_danger_weights(danger_weights)
+	interest_weights = _avoid_blocked_regions(ray_results, interest_weights, danger_weights, normalized_current_direction)
 	
 	# Subtract danger weights from interest weights and apply to direction
-	for i in interest_weights.size():
+	for i: int in interest_weights.size():
 		var calculated_weight: float = clampf(interest_weights[i] - danger_weights[i], 0, 1)
-		final_interest_weights.append(calculated_weight)
-	
+		final_interest_weights.append(calculated_weight)	
 	
 	var final_direction: Vector2 = _calculate_final_direction(final_interest_weights, ray_results)
-	_do_wall_stuff(final_direction, ray_results)
 	return final_direction
 
 
-func _calculate_danger_weight(ray: RayResult, ray_length: int) -> float:
+static func _calculate_danger_weight(ray: RayResult, ray_length: int) -> float:
 	var weight: float = 0
 	if ray.hit:
 		weight = clampf(1 - (ray.distance_to_hit / ray_length), 0, 1)
-	
+
 	return weight
 
 
-func _calculate_interest_weight(ray: RayResult, 
+static func _calculate_interest_weight(ray: RayResult, 
 	normalized_current_direction: Vector2, 
 	source_global_position: Vector2, 
 	target_global_positions: Array[Vector2]) -> float:
@@ -48,46 +49,43 @@ func _calculate_interest_weight(ray: RayResult,
 	var highest_weight: float = 0
 	
 	for target_position: Vector2 in target_global_positions:
-		var direction_to_target = source_global_position.direction_to(target_position)
-		var target_alignment = clampf(direction_to_target.dot(ray.normalized_direction), 0, 1)
-		var current_direction_alignment = clampf(ray.normalized_direction.dot(normalized_current_direction), 0, 1)
+		var direction_to_target: Vector2 = source_global_position.direction_to(target_position)
+		var target_alignment: float = clampf(direction_to_target.dot(ray.normalized_direction), 0, 1)
+		var current_direction_alignment: float = clampf(ray.normalized_direction.dot(normalized_current_direction), 0, 1)
 		var weight: float = (target_alignment * 0.8) + (current_direction_alignment * 0.2)
 
 		# Use highest interest as the final weight
-		highest_weight = max(highest_weight, weight)
+		highest_weight = maxf(highest_weight, weight)
+		
 	
 	return highest_weight
 
 
-func _propagate_danger_weights(danger_weights: Array[float]) -> Array[float]:
+static func _propagate_danger_weights(danger_weights: Array[float]) -> Array[float]:
 	if danger_weights.is_empty():
 		return danger_weights
 	
 	var propagated_weights: Array[float] = danger_weights.duplicate()
-	for i: int in danger_weights.size():
-		var weight: float = danger_weights[i]
-		
-		if is_zero_approx(weight):
-			continue
-		
-		var propagated_weight: float = weight * 0.6
-		
-		if i > 0:
-			propagated_weights[i - 1] = max(
-				propagated_weights[i - 1],
-				propagated_weight
-			)
-		
-		if i < danger_weights.size() - 1:
-			propagated_weights[i + 1] = max(
-				propagated_weights[i + 1],
-				propagated_weight
-			)
+	var neighbour_propagation_limit: int = 2 # number of neigbouring rays to spread danger to
+	var number_of_weights: int = danger_weights.size()
+	var danger_spread_factor: float = 0.6
+	
+	for i: int in number_of_weights:
+		for offset in range(1, neighbour_propagation_limit + 1):
+			var distance_decay_spread: float = pow(danger_spread_factor, offset)
+			
+			if i - offset >= 0:
+				propagated_weights[i] = maxf(propagated_weights[i], 
+					danger_weights[i - offset] * distance_decay_spread)
+			
+			if i + offset < number_of_weights:
+				propagated_weights[i] = maxf(propagated_weights[i],
+					danger_weights[i + offset] * distance_decay_spread)
 		
 	return propagated_weights
 
 
-func _calculate_final_direction(final_interest_weights: Array[float], ray_results: Array[RayResult]) -> Vector2:
+static func _calculate_final_direction(final_interest_weights: Array[float], ray_results: Array[RayResult]) -> Vector2:
 	if final_interest_weights.is_empty():
 		return Vector2.ZERO
 	
@@ -115,13 +113,83 @@ func _calculate_final_direction(final_interest_weights: Array[float], ray_result
 	# Blend next neighbouring direction
 	if best_weight_index < final_interest_weights.size() - 1:
 		var next_weight_index: int = best_weight_index + 1
-		var next_weight = final_interest_weights[next_weight_index]
+		var next_weight: float = final_interest_weights[next_weight_index]
 		
 		if next_weight >= minimum_blend_weight:
 			final_direction += ray_results[next_weight_index].normalized_direction * next_weight
 		
 	return final_direction.normalized()
 
+# Marks rays as a wall if there are a certain number of sequental ray hits
+static func _detect_wall_hits(ray_results: Array[RayResult]) -> Array[RayResult]:
+	var rays := ray_results.duplicate()
+	var ray_wall_threshold: int = maxi(int(ray_results.size() / 4.0), 4) # The number of sequential rays to assume a wall exists
+	var successive_hits: int = 0
+	
+	# Clear all is_wall flags
+	for ray: RayResult in ray_results:
+		ray.is_wall = false
+	
+	for ray_index in rays.size():
+		var ray: RayResult = rays[ray_index]
+		if not(ray.hit):
+			successive_hits = 0
+			continue
+		
+		successive_hits += 1
+		if successive_hits >= ray_wall_threshold:
+			# Treating this and previous hits as walls, so we need to backtrack and
+			# mark them as such
+			for i in range(0, ray_wall_threshold): 
+				rays[ray_index - i].is_wall = true
+	
+	return rays
 
-func _do_wall_stuff(direction: Vector2, ray_results: Array[RayResult]):
-	pass
+# Attempts to avoid sequential regions of blocked ray casts.
+static func _avoid_blocked_regions(ray_results: Array[RayResult], 
+	interest_weights: Array[float],
+	danger_weights: Array[float],
+	normalized_current_direction: Vector2) -> Array[float]:
+	if ray_results.is_empty():
+		return interest_weights
+
+	const BLOCKED_DANGER_THRESHOLD: float = 0.5 # Danger at or above this counts as blocked
+	const MIN_VIABLE_INTEREST: float = 0.3 # Best final interest below this counts as stuck
+	
+	var wall_exists: bool = false
+	var best_raw_interest: float = 0.0
+	var best_final_interest: float = 0.0
+	var most_aligned_weight: float = -INF # Interest weight that is most aligned to the current direction
+	var most_aligned_ray_index: int = -1 # Ray index that is most aligned to the current direction
+	
+	for i: int in range(ray_results.size()):
+		var ray: RayResult = ray_results[i]
+		if ray.is_wall:
+			wall_exists = true
+		
+		best_raw_interest = maxf(best_raw_interest, interest_weights[i])
+		best_final_interest = maxf(best_final_interest, interest_weights[i] - danger_weights[i])
+		
+		# Candidate fallback: an unobstructed, low-danger ray closest to the current heading
+		if not ray.hit and danger_weights[i] < BLOCKED_DANGER_THRESHOLD:
+			var alignment: float = normalized_current_direction.dot(ray.normalized_direction)
+			if alignment > most_aligned_weight:
+				most_aligned_weight = alignment
+				most_aligned_ray_index = i
+		
+	# Nothing to fix: no walls, no target, or a good option already exists
+	if not wall_exists or is_zero_approx(best_raw_interest):
+		return interest_weights
+	if best_final_interest >= MIN_VIABLE_INTEREST:
+		return interest_weights
+	
+	if most_aligned_ray_index >= 0:
+		interest_weights[most_aligned_ray_index] = 1.0
+	else:
+		# No safe ray exists. Pick the first or last ray depending on current direction
+		var last_index: int = ray_results.size() - 1
+		var first_dot: float = normalized_current_direction.dot(ray_results[0].normalized_direction)
+		var last_dot: float = normalized_current_direction.dot(ray_results[last_index].normalized_direction)
+		interest_weights[0 if first_dot > last_dot else last_index] = 1.0
+
+	return interest_weights

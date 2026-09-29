@@ -3,7 +3,7 @@ class_name Raycaster extends Node2D
 @export_range(1, 5000)
 var ray_length: int = 800
 
-@export_range(1, 100) 
+@export_range(4, 100) 
 var number_of_raycasts: int = 2
 
 @export_range(1, 180)
@@ -17,17 +17,14 @@ var _ray_result_array: Array[RayResult] = []
 var _space_state: PhysicsDirectSpaceState2D
 var _raycast_settings: RaycastSettings
 
-func _ready() -> void:
-	_raycast_settings = RaycastSettings.new()
+func cast_rays_in_direction(current_direction: Vector2, collision_mask: int = 0, exclusion_rid_array: Array[RID] = []) -> Array[RayResult]:
+	_ray_result_array.clear()
 	_space_state = get_world_2d().direct_space_state
+	
+	_raycast_settings = RaycastSettings.new()
 	_raycast_settings.ray_length = ray_length
 	_raycast_settings.number_of_raycasts = number_of_raycasts
 	_raycast_settings.degrees_between_raycasts = degrees_between_raycasts
-
-
-func cast_rays_in_direction(current_direction: Vector2, collision_mask: int = 0, exclusion_rid_array: Array[RID] = []) -> Array[RayResult]:
-	_ray_result_array.clear()
-	
 	_raycast_settings.current_direction = current_direction
 	_raycast_settings.collision_mask = collision_mask
 	_raycast_settings.exclusion_rid_array = exclusion_rid_array
@@ -54,6 +51,7 @@ func cast_ray(target_position: Vector2) -> Dictionary:
 		target_position
 	)
 	
+	raycast_query_parameters.collision_mask = _raycast_settings.collision_mask
 	raycast_query_parameters.exclude = _raycast_settings.exclusion_rid_array
 	
 	return _space_state.intersect_ray(raycast_query_parameters)
@@ -85,7 +83,7 @@ func _highlight_obstacles() -> void:
 		if not(ray_result.hit):
 			continue
 		
-		var obstacle = ray_result.collider
+		var obstacle: Object = ray_result.collider
 		if obstacle.has_method("outline_sprite"):
 			obstacle.outline_sprite()
 

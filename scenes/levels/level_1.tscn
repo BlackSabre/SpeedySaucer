@@ -58,6 +58,7 @@ metadata/_edit_lock_ = true
 
 [node name="Enemy" parent="Enemies" unique_id=1735677195 instance=ExtResource("5_sk5k4")]
 position = Vector2(1443, 322)
+move_speed = 200.0
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
 

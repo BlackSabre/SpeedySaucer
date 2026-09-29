@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 @export var move_speed: float = 300
-@export var turn_speed: float = 2
+@export var turn_rate: float = 1
 @export var max_turn_radians: float = 5
 @export var attack_move_speed: float = 750
 @export var accleration_factor: float = 50
 @export var raycaster: Raycaster
-@export var steering_manager: SteeringManager
+#@export var steering_manager: SteeringManager
 
 @export var angle_slerp_switch: float = 0.55
 @export var continuous_slerp_rate: float = 3.0
@@ -46,18 +46,20 @@ func _ready() -> void:
 	current_state = EnemyState.CREATE_DISTANCE
 	target_player = get_tree().get_first_node_in_group("Players")
 	desired_normalized_direction = (target_player.global_position - global_position).normalized()
+	current_direction = desired_normalized_direction
 	look_at(target_player.global_position)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var ray_result_data: Array[RayResult] = _calculate_ray_data()
 	var weighted_goal_direction: Vector2 = _calculate_direction(ray_result_data)
 	
-	var angle = weighted_goal_direction.angle()
-	print(weighted_goal_direction)
+	var direction_lerp_weight: float = 1.0 - exp(-turn_rate * delta)
+	current_direction = lerp(current_direction, weighted_goal_direction, direction_lerp_weight).normalized()
+	var angle = current_direction.angle()	
 	
-	rotation = lerp_angle(rotation, angle, 0.05)
-	velocity = weighted_goal_direction * move_speed
+	rotation = lerp_angle(rotation, angle, 0.2)
+	velocity = current_direction * move_speed
 	 
 	move_and_slide()
 
@@ -65,19 +67,18 @@ func _physics_process(_delta: float) -> void:
 func _calculate_ray_data() -> Array[RayResult]:
 	var ray_exclusion_rid_array: Array[RID] = [self.get_rid(), target_player.get_rid()]
 	desired_normalized_direction = (target_player.global_position - global_position).normalized()
-	return raycaster.cast_rays_in_direction(desired_normalized_direction, collision_mask, ray_exclusion_rid_array)
+	return raycaster.cast_rays_in_direction(current_direction, collision_mask, ray_exclusion_rid_array)
 
 
-func _calculate_direction(ray_result_data: Array[RayResult]):
+func _calculate_direction(ray_result_data: Array[RayResult]) -> Vector2:
 	var steering_manager_settings = SteeringManagerSettings.new()
 	var target_global_positions: Array[Vector2]
 	
 	target_global_positions.append(target_player.global_position)
 	steering_manager_settings.source_global_position = global_position
 	steering_manager_settings.target_global_positions = target_global_positions
-	steering_manager_settings.normalized_current_direction = Vector2.RIGHT
+	steering_manager_settings.normalized_current_direction = current_direction.normalized()
 	steering_manager_settings.ray_results = ray_result_data
-	steering_manager_settings.target_global_positions = target_global_positions
 	steering_manager_settings.ray_length = raycaster.ray_length
 	
-	return steering_manager.calculate_direction(steering_manager_settings)
+	return SteeringManager.calculate_direction(steering_manager_settings)
