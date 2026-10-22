@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bnfdlk88xketi"]
+
+[ext_resource type="Script" uid="uid://bmiweij7evri7" path="res://scenes/entities/weapons/enemy_weapon/enemy_weapon.gd" id="1_kw6ib"]
+[ext_resource type="Texture2D" uid="uid://dhr1773tdl4vo" path="res://assets/kenney_space-shooter-redux/PNG/Parts/gun00.png" id="1_mxvdg"]
+[ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="2_5puay"]
+
+[node name="EnemyWeapon" type="Node2D" unique_id=1504786334]
+script = ExtResource("1_kw6ib")
+projectile_scene = ExtResource("2_5puay")
+
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=1965801667]
+position = Vector2(7, 0)
+rotation = -1.5707964
+texture = ExtResource("1_mxvdg")
+
+[node name="ProjectileSpawnPosition" type="Marker2D" parent="GunSprite" unique_id=2033947300]
+position = Vector2(-8.742278e-07, 20)

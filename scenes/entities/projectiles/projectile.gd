@@ -1,4 +1,4 @@
-extends Node2D
+class_name Projectile extends Node2D
 
 @export var speed = 1000;
 
@@ -13,14 +13,19 @@ func _ready() -> void:
 	#print("bullet_pos: ", position)
 	#prints("bullet_global_pos", global_position)
 	time_to_live_timer.timeout.connect(_on_time_to_live_timer_timeout)
-	pass
+
 
 func _physics_process(delta: float) -> void:	
 	global_position += direction * speed * delta
 	#global_position = position + speed * direction * delta
 	#print("proj pos")
 	#print(global_position)
-	pass
+
+
+func setup_direction(spawn_global_position: Vector2, travel_direction: Vector2):
+	global_position = spawn_global_position
+	direction = travel_direction
+
 
 func setup(new_target_position: Vector2, spawn_position: Vector2, new_projectile_source: Enums.ProjectileSource):	
 	projectile_source = new_projectile_source

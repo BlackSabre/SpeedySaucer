@@ -1,25 +1,30 @@
 [gd_scene format=3 uid="uid://cpdbd8lt8t04w"]
 
 [ext_resource type="Script" uid="uid://bkfwwh4nvjceg" path="res://scenes/entities/enemies/enemy.gd" id="1_67neu"]
+[ext_resource type="Texture2D" uid="uid://dhr1773tdl4vo" path="res://assets/kenney_space-shooter-redux/PNG/Parts/gun00.png" id="2_gflvi"]
 [ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="2_ktqfp"]
-[ext_resource type="PackedScene" uid="uid://d0ff62v2gku3o" path="res://utilities/raycaster/raycaster.tscn" id="3_c8ylr"]
-[ext_resource type="Script" uid="uid://drd75g0e3xcwo" path="res://utilities/navigation/navigator.gd" id="3_pm80n"]
+[ext_resource type="PackedScene" uid="uid://d0ff62v2gku3o" path="res://utilities/movement/raycaster/raycaster.tscn" id="3_c8ylr"]
+[ext_resource type="Script" uid="uid://drd75g0e3xcwo" path="res://utilities/movement/navigation/navigator.gd" id="3_pm80n"]
+[ext_resource type="Script" uid="uid://bmiweij7evri7" path="res://scenes/entities/weapons/enemy_weapon/enemy_weapon.gd" id="5_20lqd"]
+[ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="6_j3iiu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("raycaster")]
+[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("enemy_weapon")]
 collision_layer = 4
 collision_mask = 14
+motion_mode = 1
 script = ExtResource("1_67neu")
-raycaster = NodePath("Navigator/Raycaster")
+enemy_weapon = NodePath("EnemyWeapon")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2082000728]
+[node name="EnemyBodySprite" type="Sprite2D" parent="." unique_id=2082000728]
 rotation = 4.712389
 texture = ExtResource("2_ktqfp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1490024136]
 shape = SubResource("CircleShape2D_7i4tb")
+metadata/_edit_lock_ = true
 
 [node name="Navigator" type="Node2D" parent="." unique_id=153048049]
 script = ExtResource("3_pm80n")
@@ -27,4 +32,16 @@ script = ExtResource("3_pm80n")
 [node name="Raycaster" parent="Navigator" unique_id=408926492 instance=ExtResource("3_c8ylr")]
 ray_length = 1200
 number_of_raycasts = 12
-debug = true
+
+[node name="EnemyWeapon" type="Node2D" parent="." unique_id=847598257 node_paths=PackedStringArray("projectile_spawn_positions")]
+script = ExtResource("5_20lqd")
+projectile_scene = ExtResource("6_j3iiu")
+projectile_spawn_positions = [NodePath("GunSprite/ProjectileSpawnPosition")]
+
+[node name="GunSprite" type="Sprite2D" parent="EnemyWeapon" unique_id=908969940]
+position = Vector2(7, 0)
+rotation = -1.5707964
+texture = ExtResource("2_gflvi")
+
+[node name="ProjectileSpawnPosition" type="Marker2D" parent="EnemyWeapon/GunSprite" unique_id=1311741830]
+position = Vector2(-8.742278e-07, 20)

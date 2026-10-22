@@ -2,7 +2,12 @@ extends RigidBody2D
 
 @onready var collisionShape2D = $CollisionShape2D
 @onready var circleShape2D: CircleShape2D = $CollisionShape2D.shape
-var force = 1000;
+
+
+signal on_player_weapon_fired
+
+
+var movement_force: float = 1000.0;
 
 
 func _process(_delta) -> void:
@@ -18,12 +23,11 @@ func _unhandled_input(_event: InputEvent) -> void:
 	#if event.is_action_pressed("move_up"):
 		#apply_force(Vector2(0, -force))
 	pass
-	
 
 
 func apply_movement():
 	var input_vector := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var vector_force: Vector2 = input_vector * force;	
+	var vector_force: Vector2 = input_vector * movement_force;
 	apply_force(vector_force)
 
 	
@@ -35,13 +39,13 @@ func get_saucer_edge_points(sample_count : int = 8) -> Array[Vector2]:
 		return []
 		
 	var radius = circleShape2D.radius
-	var angle_step = TAU / sample_count # TAU = 2π
+	var angle_step = TAU / sample_count
 	
 	for i in range(sample_count):
 		var angle = i * angle_step
 		var offset = Vector2(cos(angle), sin(angle)) * radius
 		var world_point = global_position + offset.rotated(global_rotation)
-		points.append(world_point)		
+		points.append(world_point)
 	
 	return points
 

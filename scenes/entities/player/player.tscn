@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dnklpn4a2n1yr" path="res://assets/kenney_space-shooter-redux/PNG/ufoGreen.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://dlo3uk6nwfi3s" path="res://scenes/entities/player/player.gd" id="1_dovo2"]
-[ext_resource type="PackedScene" uid="uid://bseprqe4u5hsq" path="res://scenes/entities/weapons/weapon.tscn" id="3_58kc7"]
+[ext_resource type="PackedScene" uid="uid://bseprqe4u5hsq" path="res://scenes/entities/weapons/player_weapon/weapon.tscn" id="3_58kc7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 45.0
