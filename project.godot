@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SpeedySaucerFixed"
-run/main_scene="uid://dp2j8nl5borfm"
+run/main_scene="uid://bvdwu5051tu07"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,7 +23,6 @@ GlobalSignals="*uid://dk1y47ssswx2p"
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [global_group]
 

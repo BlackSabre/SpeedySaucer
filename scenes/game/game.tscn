@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bvdwu5051tu07"]
+
+[ext_resource type="Script" uid="uid://dqvwruor182bi" path="res://scenes/game/game.gd" id="1_sul5r"]
+[ext_resource type="PackedScene" uid="uid://ccj7if7dkgmgn" path="res://scenes/level_container/level_container.tscn" id="2_0sr1o"]
+[ext_resource type="Script" uid="uid://c15o3vbjbj1b5" path="res://scenes/level_container/level_container.gd" id="3_kelw5"]
+[ext_resource type="Script" uid="uid://cw32i6qtn3ps6" path="res://scenes/obstacles/obstacles.gd" id="4_kelw5"]
+[ext_resource type="PackedScene" uid="uid://dp2j8nl5borfm" path="res://scenes/levels/level_1.tscn" id="4_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://dgt01joijnor1" path="res://scenes/entities/obstacles/meteor.tscn" id="6_5i0tg"]
+
+[node name="Game" type="Node2D" unique_id=1800722346]
+script = ExtResource("1_sul5r")
+
+[node name="LevelContainer" parent="." unique_id=124682404 instance=ExtResource("2_0sr1o")]
+script = ExtResource("3_kelw5")
+
+[node name="Level1" parent="LevelContainer" unique_id=1798295901 instance=ExtResource("4_lfrn8")]
+
+[node name="Obstacles" type="Node" parent="." unique_id=1944567295]
+script = ExtResource("4_kelw5")
+_meteor_scene = ExtResource("6_5i0tg")

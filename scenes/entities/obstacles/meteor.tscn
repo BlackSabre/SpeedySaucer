@@ -25,6 +25,11 @@ texture = ExtResource("1_l8p7f")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1725209434]
 polygon = PackedVector2Array(-32, -39, -48, 9, -22, 39, 10, 27, 33, 31, 47, -1, 22, -39)
 
-[node name="Timer" type="Timer" parent="." unique_id=332119891]
+[node name="OutlineTimer" type="Timer" parent="." unique_id=332119891]
 wait_time = 1.5
 one_shot = true
+
+[node name="DespawnTimer" type="Timer" parent="." unique_id=1937731324]
+wait_time = 20.0
+one_shot = true
+autostart = true
