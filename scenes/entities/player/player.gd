@@ -1,7 +1,8 @@
-extends RigidBody2D
+class_name Player extends RigidBody2D
 
 @onready var collisionShape2D = $CollisionShape2D
 @onready var circleShape2D: CircleShape2D = $CollisionShape2D.shape
+@onready var weapon_pivot_point: Node2D = $WeaponPivotPoint
 
 
 signal on_player_weapon_fired
@@ -17,13 +18,6 @@ func _process(_delta) -> void:
 func _physics_process(_delta) -> void:
 	apply_movement()
 	
-
-
-func _unhandled_input(_event: InputEvent) -> void:
-	#if event.is_action_pressed("move_up"):
-		#apply_force(Vector2(0, -force))
-	pass
-
 
 func apply_movement():
 	var input_vector := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -51,8 +45,7 @@ func get_saucer_edge_points(sample_count : int = 8) -> Array[Vector2]:
 
 
 func aim_weapon():
-	var weapon = $WeaponPivotPoint
 	var aim_vector = global_position.direction_to(get_global_mouse_position())
-	var aim_position = weapon.global_position + aim_vector
-	weapon.look_at(aim_position)
+	var aim_position = weapon_pivot_point.global_position + aim_vector
+	weapon_pivot_point.look_at(aim_position)
 	

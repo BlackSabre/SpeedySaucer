@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var alignment_to_player_firing_threshold: float = 0.96
 @export var random_direction_angle_threshold: float = 90
 @export var random_position_offset: int = 1000
+@export var push_force: float = 10.0
 
 @onready var navigator: Navigator = $Navigator
 
@@ -38,6 +39,7 @@ func _physics_process(delta: float) -> void:
 	rotation = lerp_angle(rotation, angle_current_direction, max_rotation_weight)
 	fire()
 	move_and_slide()
+	apply_forces()
 
 
 func _calculate_velocity(delta: float) -> Vector2:
@@ -67,6 +69,14 @@ func fire():
 	if direction_player_alignment > alignment_to_player_firing_threshold:
 		enemy_weapon.fire_weapon(normalized_current_direction, projectile_parent)
 
+
+func apply_forces() -> void:
+	for i: int in get_slide_collision_count():
+		var collision: KinematicCollision2D = get_slide_collision(i)
+		if collision.get_collider() is RigidBody2D:
+			collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force)
+		
+		
 
 # Returns the player global position if ahead of the enemy, otherwise returns a random
 # global_position. Does not currently support having multiple targets
