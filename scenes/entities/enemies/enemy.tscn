@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://drd75g0e3xcwo" path="res://utilities/movement/navigation/navigator.gd" id="3_pm80n"]
 [ext_resource type="Script" uid="uid://bmiweij7evri7" path="res://scenes/entities/weapons/enemy_weapon/enemy_weapon.gd" id="5_20lqd"]
 [ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="6_j3iiu"]
+[ext_resource type="Script" uid="uid://cs4y5ksyr8xxk" path="res://scenes/entities/enemies/target_finder_component.gd" id="8_bii57"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
@@ -45,3 +46,8 @@ texture = ExtResource("2_gflvi")
 
 [node name="ProjectileSpawnPosition" type="Marker2D" parent="EnemyWeapon/GunSprite" unique_id=1311741830]
 position = Vector2(-8.742278e-07, 20)
+
+[node name="EnemyMovementComponent" type="Node2D" parent="." unique_id=1615193449]
+
+[node name="TargetFinderComponent" type="Node" parent="." unique_id=174876635]
+script = ExtResource("8_bii57")

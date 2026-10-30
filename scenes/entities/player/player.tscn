@@ -3,15 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://dnklpn4a2n1yr" path="res://assets/kenney_space-shooter-redux/PNG/ufoGreen.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://dlo3uk6nwfi3s" path="res://scenes/entities/player/player.gd" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://bseprqe4u5hsq" path="res://scenes/entities/weapons/player_weapon/weapon.tscn" id="3_58kc7"]
+[ext_resource type="PackedScene" uid="uid://20lx1v5r2hhj" path="res://scenes/components/input_component/input_component.tscn" id="4_bjvvg"]
+[ext_resource type="Script" uid="uid://cmrqy8a3cjijk" path="res://scenes/components/input_component/input_component.gd" id="5_8akj5"]
+[ext_resource type="PackedScene" uid="uid://dp1e0mgn4bg3w" path="res://scenes/components/player_input_component/player_movement_component.tscn" id="6_bj7e2"]
+[ext_resource type="Script" uid="uid://dnnk3j7wcbv5t" path="res://scenes/components/player_input_component/player_movement_component.gd" id="7_1murt"]
+[ext_resource type="PackedScene" uid="uid://dovxmuxh4q6fa" path="res://scenes/components/weapon_aim_component/weapon_aim_component.tscn" id="8_5sj0x"]
+[ext_resource type="Script" uid="uid://bx3tlvngij5fm" path="res://scenes/components/weapon_aim_component/weapon_aim_component.gd" id="9_ovg4i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 45.0
 
-[node name="Player" type="RigidBody2D" unique_id=221803027 groups=["Players"]]
+[node name="Player" type="RigidBody2D" unique_id=221803027 node_paths=PackedStringArray("input_component", "player_movement_component", "weapon_aim_component") groups=["Players"]]
 collision_layer = 2
 collision_mask = 13
 gravity_scale = 0.0
 script = ExtResource("1_dovo2")
+input_component = NodePath("InputComponent")
+player_movement_component = NodePath("PlayerMovementComponent")
+weapon_aim_component = NodePath("WeaponAimComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=623808611]
 texture = ExtResource("1_8afob")
@@ -30,3 +39,12 @@ shape = SubResource("CircleShape2D_7i4tb")
 
 [node name="Weapon" parent="WeaponPivotPoint" unique_id=2143438046 instance=ExtResource("3_58kc7")]
 position = Vector2(80, 0)
+
+[node name="InputComponent" parent="." unique_id=436266993 instance=ExtResource("4_bjvvg")]
+script = ExtResource("5_8akj5")
+
+[node name="PlayerMovementComponent" parent="." unique_id=1762754120 instance=ExtResource("6_bj7e2")]
+script = ExtResource("7_1murt")
+
+[node name="WeaponAimComponent" parent="." unique_id=1501367368 instance=ExtResource("8_5sj0x")]
+script = ExtResource("9_ovg4i")

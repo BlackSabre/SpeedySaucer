@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var alignment_to_player_firing_threshold: float = 0.96
 @export var random_direction_angle_threshold: float = 90
 @export var random_position_offset: int = 1000
-@export var push_force: float = 10.0
+@export var push_force: float = 200.0
 
 @onready var navigator: Navigator = $Navigator
 
@@ -74,8 +74,7 @@ func apply_forces() -> void:
 	for i: int in get_slide_collision_count():
 		var collision: KinematicCollision2D = get_slide_collision(i)
 		if collision.get_collider() is RigidBody2D:
-			#collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force)
-			collision.get_collider().apply_impulse(-collision.get_normal() * push_force * 10)
+			collision.get_collider().apply_impulse(-collision.get_normal() * push_force)
 		
 		
 
