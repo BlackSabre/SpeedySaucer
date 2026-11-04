@@ -16,7 +16,7 @@ static func calculate_target_vector(path_finder_settings: PathFinderSettings) ->
 	for target: Vector2 in raycast_target_positions:		
 		var direction_to_target := source_global_position.direction_to(target)
 		
-		# not interested in negative values that point away from the player
+		# Not interested in negative values that point away from the player
 		var goal_alignment: float = clampf(
 			direction_to_target.dot(goal_direction),
 			0.0,

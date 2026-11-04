@@ -18,6 +18,7 @@ collision_layer = 4
 collision_mask = 14
 motion_mode = 1
 script = ExtResource("1_67neu")
+move_speed = 600.0
 enemy_weapon = NodePath("EnemyWeapon")
 navigator = NodePath("Navigator")
 target_finder_component = NodePath("TargetFinderComponent")

@@ -53,7 +53,6 @@ metadata/_edit_lock_ = true
 
 [node name="Enemy" parent="Enemies" unique_id=1735677195 node_paths=PackedStringArray("projectile_parent") instance=ExtResource("5_sk5k4")]
 position = Vector2(1823, 105)
-move_speed = 150.0
 projectile_parent = NodePath("../../Projectiles")
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
