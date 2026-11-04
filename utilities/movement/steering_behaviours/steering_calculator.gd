@@ -1,6 +1,6 @@
-class_name SteeringManager extends RefCounted
+class_name SteeringCalculator extends RefCounted
 
-static func calculate_direction(steering_manager_settings: SteeringManagerSettings) -> Vector2:
+static func calculate_direction(steering_manager_settings: SteeringCalculatorSettings) -> Vector2:
 	var interest_weights: Array[float] = []
 	var danger_weights: Array[float] = []
 	var final_interest_weights: Array[float] = []

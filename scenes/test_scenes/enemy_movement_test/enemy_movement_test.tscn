@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dut163n306m1r"]
+
+[ext_resource type="PackedScene" uid="uid://dgt01joijnor1" path="res://scenes/entities/obstacles/meteor.tscn" id="1_na313"]
+[ext_resource type="PackedScene" uid="uid://dwqp8t7tsynbh" path="res://scenes/entities/player/player.tscn" id="1_udeep"]
+[ext_resource type="PackedScene" uid="uid://cpdbd8lt8t04w" path="res://scenes/entities/enemies/enemy.tscn" id="2_na313"]
+
+[node name="EnemyMovementTest" type="Node2D" unique_id=937244552]
+
+[node name="Obstacles" type="Node" parent="." unique_id=116872179]
+
+[node name="Meteor" parent="Obstacles" unique_id=1280538884 instance=ExtResource("1_na313")]
+position = Vector2(986, 201)
+
+[node name="Meteor2" parent="Obstacles" unique_id=927681289 instance=ExtResource("1_na313")]
+position = Vector2(932, 80)
+
+[node name="Meteor3" parent="Obstacles" unique_id=1978566517 instance=ExtResource("1_na313")]
+position = Vector2(861, -20)
+
+[node name="Meteor4" parent="Obstacles" unique_id=930797112 instance=ExtResource("1_na313")]
+position = Vector2(911, -99)
+
+[node name="Meteor5" parent="Obstacles" unique_id=1332830189 instance=ExtResource("1_na313")]
+position = Vector2(944, -291)
+
+[node name="Meteor6" parent="Obstacles" unique_id=990180786 instance=ExtResource("1_na313")]
+position = Vector2(948, -212)
+
+[node name="Meteor7" parent="Obstacles" unique_id=2094875549 instance=ExtResource("1_na313")]
+position = Vector2(910, -353)
+
+[node name="Meteor8" parent="Obstacles" unique_id=783646381 instance=ExtResource("1_na313")]
+position = Vector2(961, 263)
+
+[node name="Meteor9" parent="Obstacles" unique_id=635134606 instance=ExtResource("1_na313")]
+position = Vector2(948, 418)
+
+[node name="Meteor10" parent="Obstacles" unique_id=2113441422 instance=ExtResource("1_na313")]
+position = Vector2(962, 325)
+
+[node name="Meteor11" parent="Obstacles" unique_id=738797382 instance=ExtResource("1_na313")]
+position = Vector2(944, 542)
+
+[node name="Meteor12" parent="Obstacles" unique_id=1266805290 instance=ExtResource("1_na313")]
+position = Vector2(872, -415)
+
+[node name="Player" parent="." unique_id=221803027 instance=ExtResource("1_udeep")]
+position = Vector2(-150, 74)
+metadata/_edit_lock_ = true
+
+[node name="Enemy" parent="." unique_id=1735677195 node_paths=PackedStringArray("projectile_parent") instance=ExtResource("2_na313")]
+position = Vector2(1644, 0)
+projectile_parent = NodePath("../Projectiles")
+
+[node name="Projectiles" type="Node" parent="." unique_id=551158132]

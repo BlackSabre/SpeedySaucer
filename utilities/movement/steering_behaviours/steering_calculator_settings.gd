@@ -1,4 +1,4 @@
-class_name SteeringManagerSettings extends Resource
+class_name SteeringCalculatorSettings extends Resource
 
 var source_global_position: Vector2
 var target_global_positions: Array[Vector2]

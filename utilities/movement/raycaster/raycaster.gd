@@ -4,7 +4,7 @@ class_name Raycaster extends Node2D
 var ray_length: int = 800
 
 @export_range(4, 100) 
-var number_of_raycasts: int = 2
+var number_of_raycasts: int = 12
 
 @export_range(1, 180)
 var degrees_between_raycasts: int = 10

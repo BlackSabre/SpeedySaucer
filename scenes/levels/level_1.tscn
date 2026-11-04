@@ -20,10 +20,6 @@ z_index = -100
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -9.0
-offset_top = 9.0
-offset_right = -9.0
-offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_6iamk")
@@ -57,8 +53,7 @@ metadata/_edit_lock_ = true
 
 [node name="Enemy" parent="Enemies" unique_id=1735677195 node_paths=PackedStringArray("projectile_parent") instance=ExtResource("5_sk5k4")]
 position = Vector2(1823, 105)
-move_speed = 500.0
-turn_rate = 2.4
+move_speed = 150.0
 projectile_parent = NodePath("../../Projectiles")
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
