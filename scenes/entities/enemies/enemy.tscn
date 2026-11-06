@@ -13,15 +13,14 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("enemy_weapon", "navigator", "target_finder_component")]
+[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("enemy_weapon", "_target_finder_component", "_movement_component")]
 collision_layer = 4
 collision_mask = 14
 motion_mode = 1
 script = ExtResource("1_67neu")
-move_speed = 600.0
 enemy_weapon = NodePath("EnemyWeapon")
-navigator = NodePath("Navigator")
-target_finder_component = NodePath("TargetFinderComponent")
+_target_finder_component = NodePath("TargetFinderComponent")
+_movement_component = NodePath("MovementComponent")
 
 [node name="EnemyBodySprite" type="Sprite2D" parent="." unique_id=2082000728]
 rotation = 4.712389
@@ -51,9 +50,11 @@ texture = ExtResource("2_gflvi")
 [node name="ProjectileSpawnPosition" type="Marker2D" parent="EnemyWeapon/GunSprite" unique_id=1311741830]
 position = Vector2(-8.742278e-07, 20)
 
-[node name="EnemyMovementComponent" type="Node" parent="." unique_id=258021844 node_paths=PackedStringArray("_body")]
+[node name="MovementComponent" type="Node" parent="." unique_id=258021844 node_paths=PackedStringArray("_body", "_navigator")]
 script = ExtResource("8_uu37f")
 _body = NodePath("..")
+_navigator = NodePath("../Navigator")
+_move_speed = 600.0
 
 [node name="TargetFinderComponent" type="Node" parent="." unique_id=174876635 node_paths=PackedStringArray("_body")]
 script = ExtResource("8_bii57")

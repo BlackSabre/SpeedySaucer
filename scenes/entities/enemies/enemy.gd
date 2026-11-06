@@ -1,17 +1,12 @@
 extends CharacterBody2D
 
-@export var move_speed: float = 300
-@export var turn_rate: float = 1.0
-@export var max_rotation_weight: float = 0.2
 @export var enemy_weapon: EnemyWeapon
 @export var projectile_parent: Node
 @export var alignment_to_player_firing_threshold: float = 0.96
-@export var random_direction_angle_threshold: float = 90
-@export var random_position_offset: int = 1000
 @export var push_force: float = 200.0
 
-@export var navigator: Navigator
-@export var target_finder_component: TargetFinderComponent
+@export var _target_finder_component: TargetFinderComponent
+@export var _movement_component: MovementComponent
 
 var normalized_current_direction := Vector2.LEFT
 var normalized_previous_direction: Vector2
@@ -26,43 +21,16 @@ func _ready() -> void:
 	target_player = get_tree().get_first_node_in_group("Players")
 	
 	if target_player:
-		#normalized_current_direction = (target_player.global_position - global_position).normalized()
-		#target_global_positions.append(target_player.global_position)
 		look_at(target_player.global_position)
 
 
-func _physics_process(delta: float) -> void:
-	#if target_global_positions.size() > 0:
-	target_global_positions = _find_next_target(delta)
-	velocity = _calculate_velocity(delta)
+func _physics_process(_delta: float) -> void:
+	target_global_positions = _find_next_target()
+	velocity = _movement_component.move_towards(target_player, target_global_positions[0])
 	
-	var angle_current_direction = normalized_current_direction.angle()
-	rotation = lerp_angle(rotation, angle_current_direction, max_rotation_weight)
 	fire()
 	move_and_slide()
 	apply_forces()
-
-
-func _calculate_velocity(delta: float) -> Vector2:
-	var ray_exclusion_rid_array: Array[RID] = [self.get_rid()]
-	if target_player:
-		ray_exclusion_rid_array.append(target_player.get_rid())
-		
-	var weighted_goal_direction: Vector2 = navigator.calculate_direction(
-		target_global_positions,
-		normalized_current_direction,
-		normalized_previous_direction,
-		collision_mask,
-		ray_exclusion_rid_array)
-	
-	var direction_lerp_weight: float = 1.0 - exp(-turn_rate * delta)
-	normalized_previous_direction = normalized_current_direction
-	
-	var lerped_direction: Vector2 = lerp(normalized_current_direction, weighted_goal_direction, direction_lerp_weight).normalized()
-	if not lerped_direction.is_zero_approx():
-		normalized_current_direction = lerped_direction
-	
-	return normalized_current_direction * move_speed
 
 
 func fire():
@@ -82,5 +50,5 @@ func apply_forces() -> void:
 
 # Returns the player global position if ahead of the enemy, otherwise returns a random
 # global_position. Does not currently support having multiple targets
-func _find_next_target(delta: float) -> Array[Vector2]:
-	return target_finder_component.find_next_target_position(normalized_current_direction)
+func _find_next_target() -> Array[Vector2]:
+	return _target_finder_component.find_next_target_position(normalized_current_direction)
