@@ -8,7 +8,8 @@
 [ext_resource type="Script" uid="uid://bmiweij7evri7" path="res://scenes/entities/weapons/enemy_weapon/enemy_weapon.gd" id="5_20lqd"]
 [ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="6_j3iiu"]
 [ext_resource type="Script" uid="uid://cs4y5ksyr8xxk" path="res://scenes/entities/enemies/target_finder_component.gd" id="8_bii57"]
-[ext_resource type="Script" uid="uid://blm0u6csccdwl" path="res://scenes/components/enemy_movement_component/enemy_movement_component.gd" id="8_uu37f"]
+[ext_resource type="Script" uid="uid://blm0u6csccdwl" path="res://scenes/components/movement_component/movement_component.gd" id="8_uu37f"]
+[ext_resource type="PackedScene" uid="uid://denqos6doovru" path="res://scenes/components/health_component/HealthComponent.tscn" id="10_wyqsp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
@@ -59,3 +60,5 @@ _move_speed = 600.0
 [node name="TargetFinderComponent" type="Node" parent="." unique_id=174876635 node_paths=PackedStringArray("_body")]
 script = ExtResource("8_bii57")
 _body = NodePath("..")
+
+[node name="HealthComponent" parent="." unique_id=408449451 instance=ExtResource("10_wyqsp")]
