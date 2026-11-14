@@ -1,6 +1,7 @@
 extends Node
 
-enum ProjectileSource {
+enum ObjectSources {
 	PLAYER,
 	ENEMY,
+	METEORITE,
 }

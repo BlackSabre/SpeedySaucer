@@ -27,7 +27,7 @@ func player_out_of_bounds() -> void:
 		get_tree().reload_current_scene()
 
 
-func _on_weapon_fired(target_position: Vector2, spawn_position: Vector2, projectile_source: Enums.ProjectileSource):
+func _on_weapon_fired(target_position: Vector2, spawn_position: Vector2, projectile_source: Enums.ObjectSources):
 	var projectile := projectile_scene.instantiate()
 	projectiles.add_child(projectile)
 	projectile.setup(target_position, spawn_position, projectile_source)

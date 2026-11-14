@@ -9,18 +9,25 @@
 [ext_resource type="Script" uid="uid://dnnk3j7wcbv5t" path="res://scenes/components/player_input_component/player_movement_component.gd" id="7_1murt"]
 [ext_resource type="PackedScene" uid="uid://dovxmuxh4q6fa" path="res://scenes/components/weapon_aim_component/weapon_aim_component.tscn" id="8_5sj0x"]
 [ext_resource type="Script" uid="uid://bx3tlvngij5fm" path="res://scenes/components/weapon_aim_component/weapon_aim_component.gd" id="9_ovg4i"]
+[ext_resource type="PackedScene" uid="uid://denqos6doovru" path="res://scenes/components/health_component/HealthComponent.tscn" id="10_ovg4i"]
+[ext_resource type="Script" uid="uid://cd21j1beedggw" path="res://scenes/components/hurtbox/hurtbox.gd" id="11_7wli1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 45.0
 
-[node name="Player" type="RigidBody2D" unique_id=221803027 node_paths=PackedStringArray("input_component", "player_movement_component", "weapon_aim_component") groups=["Players"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_vkv2p"]
+radius = 43.185646
+
+[node name="Player" type="RigidBody2D" unique_id=221803027 node_paths=PackedStringArray("_input_component", "_player_movement_component", "_weapon_aim_component", "_health_component", "_hurtbox") groups=["Players"]]
 collision_layer = 2
 collision_mask = 13
 gravity_scale = 0.0
 script = ExtResource("1_dovo2")
-input_component = NodePath("InputComponent")
-player_movement_component = NodePath("PlayerMovementComponent")
-weapon_aim_component = NodePath("WeaponAimComponent")
+_input_component = NodePath("InputComponent")
+_player_movement_component = NodePath("PlayerMovementComponent")
+_weapon_aim_component = NodePath("WeaponAimComponent")
+_health_component = NodePath("HealthComponent")
+_hurtbox = NodePath("HurtBox")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=623808611]
 texture = ExtResource("1_8afob")
@@ -33,11 +40,13 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=105370927]
+visible = false
 shape = SubResource("CircleShape2D_7i4tb")
 
 [node name="WeaponPivotPoint" type="Node2D" parent="." unique_id=1989715342]
 
 [node name="Weapon" parent="WeaponPivotPoint" unique_id=2143438046 instance=ExtResource("3_58kc7")]
+unique_name_in_owner = true
 position = Vector2(80, 0)
 
 [node name="InputComponent" parent="." unique_id=436266993 instance=ExtResource("4_bjvvg")]
@@ -48,3 +57,15 @@ script = ExtResource("7_1murt")
 
 [node name="WeaponAimComponent" parent="." unique_id=1501367368 instance=ExtResource("8_5sj0x")]
 script = ExtResource("9_ovg4i")
+
+[node name="HealthComponent" parent="." unique_id=408449451 instance=ExtResource("10_ovg4i")]
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1734920133]
+collision_layer = 2
+collision_mask = 16
+script = ExtResource("11_7wli1")
+metadata/_custom_type_script = "uid://cd21j1beedggw"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=131585094]
+shape = SubResource("CircleShape2D_vkv2p")
+debug_color = Color(0.928158, 0.24173215, 0.30770168, 0.41960785)

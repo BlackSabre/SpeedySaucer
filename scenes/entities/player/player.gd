@@ -1,12 +1,20 @@
 class_name Player extends RigidBody2D
 
-@export var input_component: InputComponent
-@export var player_movement_component: PlayerMovementComponent
-@export var weapon_aim_component: WeaponAimComponent
+@export var _projectile_parent: Node
+@export var _input_component: InputComponent
+@export var _player_movement_component: PlayerMovementComponent
+@export var _weapon_aim_component: WeaponAimComponent
+@export var _health_component: HealthComponent
+@export var _hurtbox: HurtBox
 
-@onready var collisionShape2D = $CollisionShape2D
-@onready var circleShape2D: CircleShape2D = $CollisionShape2D.shape
-@onready var weapon_pivot_point: Node2D = $WeaponPivotPoint
+@onready var _circle_shape_2d: CircleShape2D = $CollisionShape2D.shape
+@onready var _weapon_pivot_point: Node2D = $WeaponPivotPoint
+@onready var _weapon: PlayerWeapon = %Weapon
+
+
+func _ready():
+	_input_component.left_mouse_clicked.connect(_on_left_mouse_clicked)
+	_hurtbox.on_hurtbox_hit.connect(_on_hurtbox_hit)
 
 
 func _process(_delta) -> void:
@@ -20,12 +28,7 @@ func _physics_process(_delta) -> void:
 
 func get_saucer_edge_points(sample_count : int = 8) -> Array[Vector2]:
 	var points: Array[Vector2] = []
-	
-	if (not(circleShape2D is CircleShape2D)):
-		printerr("Shape is not a circle!")
-		return []
-		
-	var radius = circleShape2D.radius
+	var radius = _circle_shape_2d.radius
 	var angle_step = TAU / sample_count
 	
 	for i in range(sample_count):
@@ -38,11 +41,24 @@ func get_saucer_edge_points(sample_count : int = 8) -> Array[Vector2]:
 
 
 func move() -> void:
-	var vector_force: Vector2 = input_component.calculate_vector_force()
-	player_movement_component.apply_movement(self, vector_force)
+	var vector_force: Vector2 = _input_component.calculate_vector_force()
+	_player_movement_component.apply_movement(self, vector_force)
 
 
 func aim_weapon():
-	var aim_vector = input_component.get_direction_to_mouse_pointer(self)
-	weapon_aim_component.aim_weapon(aim_vector, weapon_pivot_point)
-	
+	var aim_vector = _input_component.get_direction_to_mouse_pointer(self)
+	_weapon_aim_component.aim_weapon(aim_vector, _weapon_pivot_point)
+
+
+func take_damage(amount: int, damage_source: Enums.ObjectSources):
+	if damage_source != Enums.ObjectSources.PLAYER:
+		_health_component.damage(amount)
+		print(_health_component.current_health)
+
+
+func _on_left_mouse_clicked(mouse_position: Vector2):
+	_weapon.fire(mouse_position, _projectile_parent)
+
+
+func _on_hurtbox_hit(hitbox: Hitbox, damage: int):
+	_health_component.damage(damage)

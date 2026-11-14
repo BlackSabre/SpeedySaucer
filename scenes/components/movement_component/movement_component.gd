@@ -4,7 +4,7 @@ class_name MovementComponent extends Node
 @export var _navigator: Navigator
 @export var _move_speed: float = 300.0
 @export var _turn_rate: float = 1.0
-@export var max_rotation_weight: float = 1.0
+@export var _max_rotation_weight: float = 1.0
 
 var _normalized_current_direction := Vector2.ZERO
 var _normalized_previous_direction := Vector2.ZERO
@@ -14,6 +14,10 @@ var _ray_exclusion_rid_array: Array[RID]
 func _ready():
 	setup()
 
+
+func get_normalized_current_direction() -> Vector2:
+	return _normalized_current_direction
+	
 
 func setup():
 	if not _body: 
@@ -51,4 +55,4 @@ func move_towards(target_body: Node, target_global_position: Vector2) -> Vector2
 
 func _rotate() -> void:
 	var angle_current_direction = _normalized_current_direction.angle()
-	_body.rotation = lerp_angle(_body.rotation, angle_current_direction, max_rotation_weight)
+	_body.rotation = lerp_angle(_body.rotation, angle_current_direction, _max_rotation_weight)

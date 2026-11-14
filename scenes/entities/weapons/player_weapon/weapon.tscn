@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c0kw1p7gv203v" path="res://scenes/entities/weapons/player_weapon/weapon.gd" id="1_trvpb"]
 [ext_resource type="Texture2D" uid="uid://c016hto81t3qk" path="res://assets/kenney_space-shooter-redux/PNG/Parts/beam6.png" id="2_6x0ya"]
+[ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="2_qnew5"]
 
 [node name="Weapon" type="Node2D" unique_id=2143438046]
 script = ExtResource("1_trvpb")
+projectile_scene = ExtResource("2_qnew5")
 
 [node name="WeaponSprite" type="Sprite2D" parent="." unique_id=228405532]
 texture = ExtResource("2_6x0ya")

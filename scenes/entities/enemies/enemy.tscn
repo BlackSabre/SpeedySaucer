@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c0qob77ivtlw5" path="res://assets/kenney_space-shooter-redux/PNG/Enemies/enemyRed1.png" id="2_ktqfp"]
 [ext_resource type="PackedScene" uid="uid://d0ff62v2gku3o" path="res://utilities/movement/raycaster/raycaster.tscn" id="3_c8ylr"]
 [ext_resource type="Script" uid="uid://drd75g0e3xcwo" path="res://utilities/movement/navigation/navigator.gd" id="3_pm80n"]
+[ext_resource type="PackedScene" uid="uid://dm1kxp0t2xkhx" path="res://scenes/components/hurtbox/hurtbox.tscn" id="3_w6k81"]
 [ext_resource type="Script" uid="uid://bmiweij7evri7" path="res://scenes/entities/weapons/enemy_weapon/enemy_weapon.gd" id="5_20lqd"]
 [ext_resource type="PackedScene" uid="uid://cb182f731msqr" path="res://scenes/entities/projectiles/projectile.tscn" id="6_j3iiu"]
 [ext_resource type="Script" uid="uid://cs4y5ksyr8xxk" path="res://scenes/entities/enemies/target_finder_component.gd" id="8_bii57"]
@@ -14,21 +15,29 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
 radius = 36.013885
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("enemy_weapon", "_target_finder_component", "_movement_component")]
+[node name="Enemy" type="CharacterBody2D" unique_id=1735677195 node_paths=PackedStringArray("_target_finder_component", "_movement_component", "_health_component", "_hurtbox") groups=["Enemy"]]
 collision_layer = 4
-collision_mask = 14
+collision_mask = 30
 motion_mode = 1
 script = ExtResource("1_67neu")
-enemy_weapon = NodePath("EnemyWeapon")
 _target_finder_component = NodePath("TargetFinderComponent")
 _movement_component = NodePath("MovementComponent")
+_health_component = NodePath("HealthComponent")
+_hurtbox = NodePath("HurtBox")
 
 [node name="EnemyBodySprite" type="Sprite2D" parent="." unique_id=2082000728]
 rotation = 4.712389
 texture = ExtResource("2_ktqfp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1490024136]
+visible = false
 shape = SubResource("CircleShape2D_7i4tb")
+metadata/_edit_lock_ = true
+
+[node name="HurtBox" parent="." unique_id=1308416362 instance=ExtResource("3_w6k81")]
+collision_layer = 4
+collision_mask = 16
+_source = 1
 metadata/_edit_lock_ = true
 
 [node name="Navigator" type="Node2D" parent="." unique_id=153048049]
@@ -36,9 +45,9 @@ script = ExtResource("3_pm80n")
 
 [node name="Raycaster" parent="Navigator" unique_id=408926492 instance=ExtResource("3_c8ylr")]
 ray_length = 1200
-debug = true
 
 [node name="EnemyWeapon" type="Node2D" parent="." unique_id=847598257 node_paths=PackedStringArray("projectile_spawn_positions")]
+unique_name_in_owner = true
 script = ExtResource("5_20lqd")
 projectile_scene = ExtResource("6_j3iiu")
 projectile_spawn_positions = [NodePath("GunSprite/ProjectileSpawnPosition")]

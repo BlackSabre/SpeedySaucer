@@ -43,17 +43,18 @@ metadata/_edit_lock_ = true
 [node name="Maze" parent="." unique_id=847609853 instance=ExtResource("3_nsrm0")]
 z_index = -50
 
-[node name="Player" parent="." unique_id=221803027 instance=ExtResource("4_6761a")]
+[node name="Player" parent="." unique_id=221803027 node_paths=PackedStringArray("_projectile_parent") instance=ExtResource("4_6761a")]
 position = Vector2(-334, 322)
+_projectile_parent = NodePath("../Projectiles")
 metadata/_edit_lock_ = true
 
 [node name="Projectiles" type="Node" parent="." unique_id=310741646]
 
 [node name="Enemies" type="Node" parent="." unique_id=862519078]
 
-[node name="Enemy" parent="Enemies" unique_id=1735677195 node_paths=PackedStringArray("projectile_parent") instance=ExtResource("5_sk5k4")]
+[node name="Enemy" parent="Enemies" unique_id=1735677195 node_paths=PackedStringArray("_projectile_parent") instance=ExtResource("5_sk5k4")]
 position = Vector2(1823, 105)
-projectile_parent = NodePath("../../Projectiles")
+_projectile_parent = NodePath("../../Projectiles")
 
 [node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
 

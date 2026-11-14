@@ -2,20 +2,20 @@
 
 [ext_resource type="Texture2D" uid="uid://vbqq3vksa13g" path="res://assets/kenney_space-shooter-redux/PNG/Lasers/laserBlue08.png" id="1_6ndfs"]
 [ext_resource type="Script" uid="uid://bk861o44kamwv" path="res://scenes/entities/projectiles/projectile.gd" id="1_kbb6n"]
+[ext_resource type="PackedScene" uid="uid://q2hrw72yqsum" path="res://scenes/components/hitbox/hitbox.tscn" id="2_onq88"]
+[ext_resource type="Script" uid="uid://din340ma6a08m" path="res://scenes/components/hitbox/hitbox.gd" id="3_152sm"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7i4tb"]
-radius = 4.12
-
-[node name="Projectile" type="Node2D" unique_id=582646542]
+[node name="Projectile" type="Node2D" unique_id=80208779 node_paths=PackedStringArray("_hitbox")]
 script = ExtResource("1_kbb6n")
+_hitbox = NodePath("Hitbox")
+
+[node name="Hitbox" parent="." unique_id=1510057994 instance=ExtResource("2_onq88")]
+collision_layer = 16
+collision_mask = 14
+script = ExtResource("3_152sm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1633675418]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_6ndfs")
-
-[node name="ProjectileArea" type="Area2D" parent="." unique_id=1349149715]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileArea" unique_id=1786881630]
-shape = SubResource("CircleShape2D_7i4tb")
 
 [node name="TimeToLiveTimer" type="Timer" parent="." unique_id=1301854244]
