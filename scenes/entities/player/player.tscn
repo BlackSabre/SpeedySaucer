@@ -40,7 +40,6 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=105370927]
-visible = false
 shape = SubResource("CircleShape2D_7i4tb")
 
 [node name="WeaponPivotPoint" type="Node2D" parent="." unique_id=1989715342]

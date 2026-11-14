@@ -1,10 +1,9 @@
 class_name Obstacles extends Node
 
-
 @export var _meteor_scene: PackedScene
+@export var _spawn_interval: float = 0.05
 
 var _spawn_timer: float = 0.0
-@export var _spawn_interval: float = 0.05
 
 func _ready() -> void:
 	#calculate_random_obstacle_position()
@@ -28,7 +27,7 @@ func spawn_random_obstacle():
 
 
 func _calculate_random_position() -> Vector2:
-	var camera_position: Vector2 = get_viewport().get_camera_2d().global_position
+	var camera_position: Vector2 = get_viewport().get_camera_2d().get_screen_center_position()
 	var screen_size: Vector2 = get_window().size
 	var spawn_at_bottom_or_top_edge = randi_range(0, 1)
 	var x_spawn_position: int = 0
@@ -36,8 +35,8 @@ func _calculate_random_position() -> Vector2:
 	
 	if spawn_at_bottom_or_top_edge:
 		x_spawn_position = randi_range(
-			int(camera_position.x - screen_size.x * 2),
-			int(camera_position.x + screen_size.x * 2)
+			int((camera_position.x - screen_size.x) * 2),
+			int((camera_position.x + screen_size.x) * 2)
 		)
 		y_spawn_position = camera_position.y + screen_size.y * 2 * [-1, 1].pick_random()
 	else:

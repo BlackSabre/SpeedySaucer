@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://brobpx3kwsl7j"]
+
+[ext_resource type="Script" uid="uid://cw32i6qtn3ps6" path="res://scenes/obstacles/obstacles.gd" id="1_s6jn4"]
+[ext_resource type="PackedScene" uid="uid://dgt01joijnor1" path="res://scenes/entities/obstacles/meteor.tscn" id="2_upgr7"]
+
+[node name="Obstacles" type="Node" unique_id=1525071891]
+script = ExtResource("1_s6jn4")
+_meteor_scene = ExtResource("2_upgr7")

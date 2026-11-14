@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://c4rxuqscqfmt1" path="res://scenes/levels/mazes/Maze.tscn" id="3_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://dwqp8t7tsynbh" path="res://scenes/entities/player/player.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://cpdbd8lt8t04w" path="res://scenes/entities/enemies/enemy.tscn" id="5_sk5k4"]
-[ext_resource type="PackedScene" uid="uid://dgt01joijnor1" path="res://scenes/entities/obstacles/meteor.tscn" id="6_sk5k4"]
 
 [node name="Level1" type="Node2D" unique_id=1798295901]
 script = ExtResource("1_ksju7")
@@ -55,9 +54,3 @@ metadata/_edit_lock_ = true
 [node name="Enemy" parent="Enemies" unique_id=1735677195 node_paths=PackedStringArray("_projectile_parent") instance=ExtResource("5_sk5k4")]
 position = Vector2(1823, 105)
 _projectile_parent = NodePath("../../Projectiles")
-
-[node name="Obstacles" type="Node2D" parent="." unique_id=811036353]
-
-[node name="Meteor" parent="Obstacles" unique_id=1280538884 instance=ExtResource("6_sk5k4")]
-position = Vector2(-635, 1299)
-inertia = 32.87
