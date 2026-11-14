@@ -1,15 +1,9 @@
 class_name Obstacles extends Node
 
 @export var _meteor_scene: PackedScene
-@export var _spawn_interval: float = 0.05
+@export var _spawn_interval: float = 1
 
 var _spawn_timer: float = 0.0
-
-func _ready() -> void:
-	#calculate_random_obstacle_position()
-	#create_random_obstacle()
-	pass
-	
 
 
 func _physics_process(delta: float) -> void:

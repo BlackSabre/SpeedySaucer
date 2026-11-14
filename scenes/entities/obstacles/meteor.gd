@@ -4,21 +4,21 @@ class_name Meteor extends RigidBody2D
 
 @export var move_speed_max_offset: int = 250
 @export var debug_outline_thickness: float = 7
+@export var _on_screen_notifier: VisibleOnScreenNotifier2D
+@export var _sprite_2d: Sprite2D
 
-@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var outline_timer: Timer = $OutlineTimer
-@onready var despawn_timer: Timer = $DespawnTimer
+@onready var _despawn_timer: Timer = $DespawnTimer
+@onready var sprite_material: Material = _sprite_2d.material
 
-
-var sprite_material: Material
 var spawn_position_max_offset: int = 1000
 
+
 func _ready():
-	sprite_material = sprite_2d.material
 	outline_timer.timeout.connect(_outline_remove)
-	despawn_timer.timeout.connect(_despawn)
+	_despawn_timer.timeout.connect(_despawn)
 	_outline_remove()
-	
+
 
 func calculate_linear_velocity() -> void:
 	var random_speed_offset: int = randi_range(-move_speed_max_offset, move_speed_max_offset)
@@ -50,5 +50,13 @@ func _outline_remove():
 	sprite_material.set_shader_parameter("outline_thickness", 0)
 
 
-func _despawn():
+
+func _despawn() -> void:
+	print("Despawn ", name, "?")
+	if _on_screen_notifier.is_on_screen():
+		print("Restart Timer for ", name)
+		_despawn_timer.start()
+		return
+	
+	print("Deleting ", name)
 	queue_free()
